@@ -826,3 +826,5 @@ fi
 
 
 }
+
+alias last="git config --global alias.g 'log --all --decorate --oneline --graph'"
