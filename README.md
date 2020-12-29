@@ -8,7 +8,7 @@ geometry: margin=1cm
 <!-- date: 05.11.20 -->
 tags:
 categories: [i ]
-papersize: a3
+<!--papersize: a3-->
 ---
 
 

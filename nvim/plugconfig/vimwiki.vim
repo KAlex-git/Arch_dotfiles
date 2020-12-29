@@ -4,7 +4,7 @@ nmap <leader>v :VimwikiIndex
 nnoremap <leader>h :h vimwiki<cr>
 
 " Ensure files are read as what I want:
-let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let g:vimwiki_ext2syntax = { '.md': 'markdown', '.markdown': 'markdown'}
 
 
 
