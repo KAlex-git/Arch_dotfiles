@@ -1,2 +1,2 @@
 # Arch_dotfiles
-DWM-ls
+что-то написанно....
