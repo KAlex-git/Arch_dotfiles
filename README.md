@@ -3,10 +3,10 @@
 
 Установленные программы:
 
-|             |                  |
-| --------    | --------         |
-| sxiv        | image/gif viewer |
-| mpv         | video player     |
-| lf          | file manager     |
-| mpd/ncmpcpp | music            |
-|             |                  |
+| название программы | Описание         |
+| --------           | --------         |
+| sxiv               | image/gif viewer |
+| mpv                | video player     |
+| lf                 | file manager     |
+| mpd/ncmpcpp        | music            |
+|                    |                  |
