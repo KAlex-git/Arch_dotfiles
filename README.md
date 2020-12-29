@@ -3,10 +3,10 @@
 
 Установленные программы:
 
-| название программы | Описание         |
+| Название программы | Описание         |
 | --------           | --------         |
 | sxiv               | image/gif viewer |
 | mpv                | video player     |
 | lf                 | file manager     |
 | mpd/ncmpcpp        | music            |
-|                    |                  |
+| neovim (nvim)      | text editor      |
