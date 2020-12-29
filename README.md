@@ -1,4 +1,2 @@
 # Arch_dotfiles
-
-
-hap
+У меня два оконный менеджера DWM и BSWPM
