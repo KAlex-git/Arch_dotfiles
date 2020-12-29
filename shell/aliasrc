@@ -549,16 +549,13 @@ o(){ if  cd "$1"; then ls -a; else open "$1" & disown ; exit; fi ;}
 
 	    ## add all
 		echo
-		echo
 	    echo -e " add all complited"
 		echo -e "alias "gaa""
 		git add -A
 		echo
-		echo
 		## commit and push
 	    echo -e " git commit -m " "no comments" " && git push"
 		echo -e "alias "gc" "
-		echo
 		echo
 		## git commit -m "$@" && git push
 		git commit -m "no commit" && git push
