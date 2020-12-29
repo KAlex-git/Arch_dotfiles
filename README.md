@@ -9,4 +9,4 @@
 | mpv                | video player     |
 | lf                 | file manager     |
 | mpd/ncmpcpp        | music            |
- neovim (nvim)      | text editor      |
+| neovim (nvim)      | text editor      |
