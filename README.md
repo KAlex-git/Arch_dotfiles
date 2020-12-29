@@ -1,2 +1,2 @@
 # Arch_dotfiles
-DWM
+DWM-ls
