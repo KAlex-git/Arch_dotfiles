@@ -10,26 +10,13 @@ gs(){
 		 git rev-parse HEAD > /dev/null 2>&1 || return
 		 git -c color.status=always status --short
 		 }
-## просмотреть последние изменения в commits
-	alias l="git show"
-## commit
-	alias c="git commit -m "$@" && git push origin main"
-## remove
-   dd()		## remove folder/files
-   {
-		echo -n 'remove dir/files: '
-		read
-		rd $REPLY
-		git add -A
-		git commit -m "no commit"
-		git push
-   }
-## remove commit link
-	alias r="git rm --cached `git ls-files -i -X .gitignore`"
+
+
 
 ## MENU
 	 cd $HOME/dev/Arch_dotfiles/
 	 echo "$(ls -a)"
+while true; do
 	echo " press ( s ) >>  git git status"
 	echo " press ( a ) >>  git add -A (ALL)"
 	echo " press ( l ) >>  git show (просмотр последнего изменения) "
@@ -40,12 +27,30 @@ gs(){
        	read choi
 	case "$choi" in
         s) s ;;
-        a) git add -A ;; ## add all
-        l) l ;;
-        c) c ;;
-        d) dd ;;
-        r) r ;;
+        a) git add -A; break;;																	## add all
+        l) git show; break;;																		## просмотреть последние изменения в commits
+        c) echo -n 'commentary'; read -r write
+						git commit -m "$write"
+						git push origin main
+						break
+						;;																									## commit
+        d)  echo -n 'remove dir/files: '
+						ls
+						read
+						rd $REPLY
+						git add -A
+						git commit -m "no commit"
+						git push; break
+						;;																									## remove folder/files
+        r) git rm --cached $(git ls-files .gitignore)
+						git add .gitignore
+						git commit -m "fix .gitignore"
+						git push origin main
+						break
+					;;																							## удалить файлы, папки используя изменения из файла .gitignore
+				q) break;;
     esac
+done
 }
 
 
