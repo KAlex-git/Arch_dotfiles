@@ -768,12 +768,12 @@ drive push RSL_Иллюстрации_к_служению
    }
 
 
-## add file(s)
-## add 1 files
+## add 1 files (fzf)
 	ga() {
 			local files=$(git ls-files --modified | fzf --ansi)
 			if [[ -n $files ]]; then
-					git add --verbose $files
+					#git add --verbose $files
+					ls -la $files
 			fi
 	}
 
