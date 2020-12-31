@@ -3,11 +3,6 @@
 ##git aliases
 ## git status, add, commit, push
 gs(){
-	s(){
-		 }
-
-
-
 ## MENU
 	 cd $HOME/dev/Arch_dotfiles/
 	 echo "$(ls -a)"
@@ -29,7 +24,8 @@ while true; do
 					 git -c color.status=always status --short
 					 ;;																										## git status
 
-        a) git add -A
+        a)
+					git add .
 					git commit -m "no commentary"
 					git push
 					break
