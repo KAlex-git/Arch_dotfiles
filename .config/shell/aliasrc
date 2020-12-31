@@ -769,21 +769,13 @@ drive push RSL_Иллюстрации_к_служению
 
 
 ## add file(s)
-   alias ga='fzf_git_add' 		## add 1 files
-     	fzf_git_add() {
-     	    local files=$(git ls-files --modified | fzf --ansi)
-     	    if [[ -n $files ]]; then
-     	        git add --verbose $files
-     	    fi
-     	}
-   ## add all
-      alias gaa='git add -A'
-
-   ## commit and push
-      gc(){
-			  git commit -m "$@"
-				git push
-     	}
+## add 1 files
+	ga() {
+			local files=$(git ls-files --modified | fzf --ansi)
+			if [[ -n $files ]]; then
+					git add --verbose $files
+			fi
+	}
 
 ## Переключение на нужную ветку в git
    #alias gb='git branch'			## view current branch
