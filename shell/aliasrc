@@ -541,7 +541,7 @@ o(){ if  cd "$1"; then ls -a; else open "$1" & disown ; exit; fi ;}
    gs()
    {
 	   cd /home/alex/dev/Arch_dotfiles
-		rsync -avzur --delete  ~/.config/{shell,x11,bookmenu,lf,nvim,ncmpcpp,mp,sxiv,zsh} .
+		rsync -avzur --delete  ~/.config/{bswpm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mp,sxiv,zsh} .
 	   echo "git status --untracked-files=no"
 
        git rev-parse HEAD > /dev/null 2>&1 || return
