@@ -33,4 +33,4 @@ papersize: a5
 
 ![][logo]
 
-[zsh-git]:  (/Arch_dotfiles/.config/zsh/zsh-git.png)
+[zsh-git]:  ($HOME/dev/Arch_dotfiles/.config/zsh/zsh-git.png)
