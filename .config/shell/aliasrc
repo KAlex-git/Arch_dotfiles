@@ -27,7 +27,6 @@ alias \
 	ll="ls -lahNG --color=auto --group-directories-first" \
 	ls="ls -hN --color=auto --group-directories-first" \
 	la="locate "$1"" \
-	gr="grep --color=auto" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
 	book="abook -C $HOME/.config/abook/abookrc" \
