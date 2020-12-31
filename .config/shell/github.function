@@ -14,7 +14,7 @@
 		## add all
 		git add -A
 		## git commit -m "$@" && git push
-		git commit -m "no commit" && git push
+		git commit -m "change" && git push
    }
 
    gr()		## remove folder/files
@@ -24,7 +24,7 @@
 		rd $REPLY
 		git add -A
 		git commit -m "no commit"
-		git push
+		git push origin main
    }
 
 # ----------------------    GIT heart FZF ------------------------------------- #
