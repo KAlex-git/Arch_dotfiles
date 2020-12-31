@@ -44,7 +44,6 @@ papersize: a5
 
 
 [link](#zsh)
-
 ![][logo]
 
-[zsh-git]:  "Logo text" /Arch_dotfiles/.config/zsh/zsh-git.png "😀"
+[zsh-git]:  "/Arch_dotfiles/.config/zsh/zsh-git.png "😀" "
