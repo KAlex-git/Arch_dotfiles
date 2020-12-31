@@ -1,6 +1,6 @@
-# -------------
-##git aliases
+# vim: filetype=dosini
 
+##git aliases
 ## git status, add, commit, push
    gs()
    {
