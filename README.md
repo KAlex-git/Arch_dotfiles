@@ -31,6 +31,4 @@ papersize: a5
 
 [link](#zsh)
 
-![][logo]
-
-[zsh-git]:  (https://github.com/KAlex-git/Arch_dotfiles/raw/main/.config/zsh/zsh-git.png)
+[zsh-git] (https://github.com/KAlex-git/Arch_dotfiles/raw/main/.config/zsh/zsh-git.png)
