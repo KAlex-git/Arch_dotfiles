@@ -1,0 +1,57 @@
+# -------------
+##git aliases
+
+## git status, add, commit, push
+   gs()
+   {
+	   cd /home/alex/dev/Arch_dotfiles
+		rsync -avzur --delete  ~/.config/{polybar,bspwm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mp,sxiv,zsh} $HOME/dev/Arch_dotfiles/.config
+		rsync -avzur --delete  ~/.local/{bin,src} $HOME/dev/Arch_dotfiles/.local
+
+		 git rev-parse HEAD > /dev/null 2>&1 || return
+		 git -c color.status=always status --short
+
+		## add all
+		git add -A
+		## git commit -m "$@" && git push
+		git commit -m "no commit" && git push
+   }
+
+   gr()		## remove folder/files
+   {
+		echo -n 'remove dir/files: '
+		read
+		rd $REPLY
+		git add -A
+		git commit -m "no commit"
+		git push
+   }
+
+# ----------------------    GIT heart FZF ------------------------------------- #
+## add 1 files (fzf)
+	ga() {
+			local files=$(git ls-files --modified | fzf --ansi)
+			if [[ -n $files ]]; then
+					git add --verbose $files
+			fi
+	}
+
+## Переключение на нужную ветку в git
+   #alias gb='git branch'			## view current branch
+gb() {
+		cd ssh.local/
+		git branch ;
+		git rev-parse HEAD > /dev/null 2>&1 || return
+		git branch -a --color=always | grep -v '/HEAD\s' | sort |
+		fzf --ansi --multi --tac --preview-window right:70% \
+		--preview 'git log --oneline --graph --date=short \
+		--color=always --pretty="format:%C(auto)%cd %h%d %s" \
+		$(sed s/^..// <<< {} | cut -d" " -f1) | head -200' |
+  sed 's/^..//' | cut -d' ' -f1 |
+  sed 's#^remotes/##'
+}
+
+##
+  alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'--all"
+  alias gll='fzf_git_log'
+#  alias gl2="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
