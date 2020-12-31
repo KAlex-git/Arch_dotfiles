@@ -762,6 +762,9 @@ drive push RSL_Иллюстрации_к_служению
 
    gr()		## remove folder/files
    {
+		echo -n 'remove dir/files: '
+		read
+		rd $REPLY
 		git add -A
 		git commit -m "no commit"
 		git push
@@ -772,8 +775,7 @@ drive push RSL_Иллюстрации_к_служению
 	ga() {
 			local files=$(git ls-files --modified | fzf --ansi)
 			if [[ -n $files ]]; then
-					#git add --verbose $files
-					ls -la $files
+					git add --verbose $files
 			fi
 	}
 
