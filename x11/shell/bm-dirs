@@ -1,0 +1,21 @@
+# You can add comments to these files with #
+cac ~/.cache
+cc  ~/.config
+D   ~/Downloads
+d   ~/Documents
+dt  ~/.local/share
+h   ~
+m   ~/Music
+mn  ~/mnt
+pp  ~/Pictures
+sc  ~/.local/bin
+src ~/.local/src
+VV  ~/Videos
+mn  ~/mnt
+qq  ~/.config/qutebrowser
+vv  ~/.config/nvim
+ii  ~/.config/install_system
+is  ~/.config/install_system/SHELL
+iu  ~/.config/install_system/AUR_PKG
+bm  ~/.config/bookmenu
+bub /usr/share/bookmenu
