@@ -1,0 +1,22 @@
+#!/bin/bash
+#for opening file with Watchtower Library
+installpkg="wine lib32-libldap wine_gecko winetricks wine-mono"
+prog="/usr/bin/"
+ist(){
+    printf "installed packages?\n $installpkg? [y/n]\n"; read -r ans
+    case "$ans" in
+        y*|Y*) yes | sudo pacman -S $installpkg ;;
+    esac
+}
+
+
+[[ -e "$prog/$installpkg" ]] &&	ist || $wi
+
+
+## Проверка на запущенный процесс и если запущенн....убивается
+[[ ! -z $(pgrep -xU $UID WTLibrary.exe) ]] && killall WTLibrary.exe
+
+wi="$(\
+notify-send  -i "$HOME/.local/share/icons/WT.png" "WatchtowerLibrary"
+wine "$HOME/.local/share/wineprefixes/default/drive_c/Program Files/Watchtower/Watchtower Library/U/WTLibrary.exe" 2>/dev/null $ disown ; exit \
+	)"

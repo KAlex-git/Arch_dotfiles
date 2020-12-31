@@ -1,0 +1,40 @@
+#!/bin/sh
+# Feed this script a link and it will give dmenu
+# some choice programs to use to open it.
+
+re="/home/alex/.config/install_system/radio/RadioRelax.m3u"
+cl="http://minnesota.publicradio.org/tools/play/streams/classical.pls"
+ne="http://minnesota.publicradio.org/tools/play/streams/news.pls" # MPR News
+cu="http://minnesota.publicradio.org/tools/play/streams/the_current.pls" # The Current
+lo="http://minnesota.publicradio.org/tools/play/streams/local.pls" # Local Current
+he="http://minnesota.publicradio.org/tools/play/streams/radio_heartland.pls" # MPR Radio Heartland
+wo="http://wondergroundstream2.publicradio.org/wonderground" # MPR Wonderground Windows Media
+ch="http://choralstream1.publicradio.org/choral.m3u" # Clasical MPR Choral
+we="http://www.wefunkradio.com/play/shoutcast.pls" # WEFUNK Radio MP3 64K
+sl="http://sleepbot.com/ambience/cgi/listen.cgi/listen.pls" # Sleepbot Environmental Broadcast 56K MP3
+gr="http://somafm.com/groovesalad130.pls" # Soma FM Groove Salad iTunes AAC 128K
+dr="http://somafm.com/dronezone130.pls" # Soma FM Drone Zone iTunes AAC 128K
+lu="http://somafm.com/lush130.pls" # Soma FM Lush iTunes AAC 128K
+so="http://somafm.com/sonicuniverse.pls" # Soma FM Sonic Universe iTunes AAC 128K
+
+dm="dmenu -fn Monospace-8 -sb "#d79921" -sf "#1d2021" -nf "#000000" -nb "#000000" -p"
+
+case "$(printf "kill\\nRadioRelax\\nclassic\\nnews\\ncurrent\\nlocalcurrent\\nheartland\\nwonderground\\nchoral\\nwefunk\\nsleepbot\\ngroovesalad\\ndronezone\\nlush\\nsonicuniverse" | \
+	dmenu -i -l 20 -fn Monospace-8 -sb "#d79921" -sf "#1d2021" -nf "#000000" -nb "#00ff00" -p "choice radio:")" in
+
+	kill) 		    pkill -9 mpv ;;
+	RadioRelax) 	setsid mpv $re ;;
+	classic ) 	    setsid mpv $cl ;;
+	news ) 	  	    setsid mpv $ne ;; # MPR News
+	current ) 	    setsid mpv $cu ;; # The Current
+	localcurrent ) 	setsid mpv $lo ;; # Local Current
+	heartland ) 	setsid mpv $he ;; # MPR Radio Heartland
+	wonderground ) 	setsid mpv $wo ;; # MPR Wonderground Windows Media
+	choral )	    setsid mpv $ch ;; # Clasical MPR Choral
+	wefunk	)	    setsid mpv $we ;; # WEFUNK Radio MP3 64K
+	sleepbot )	    setsid mpv $sl ;; # Sleepbot Environmental Broadcast 56K MP3
+	groovesalad )	setsid mpv $gr ;; # Soma FM Groove Salad iTunes AAC 128K
+	dronezone ) 	setsid mpv $dr ;; # Soma FM Drone Zone iTunes AAC 128K
+	lush )		    setsid mpv $lu ;; # FM Lush iTunes AAC 128K
+	sonicuniverse )	setsid mpv $so ;; # Soma FM Sonic Universe iTunes AAC 128K
+esac

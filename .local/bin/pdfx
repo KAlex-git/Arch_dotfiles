@@ -1,0 +1,34 @@
+#!/bin/bash
+##
+
+## Setting
+windat="$HOME/.config/install_system/wine/PDF-XChange.Viewer.Pro/"
+pdfdat="PDF-XChange Viewer Settings.dat"
+dat="$HOME/.config/install_system/wine/PDF-XChange.Viewer.Pro/PDF-XChange_Viewer_Settings.dat"
+
+echo " - - - - - - - - - - - - - - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - "
+echo
+echo "     - - This script checks file "$pdfdat" in folders - -"
+echo "     - -  "$windat" - -"
+echo
+echo " - - - - - - - - - - - - - - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - "
+
+if [ ! -f "$windat"/"pdfdat" ]
+then
+       cp "$dat" "$windat"
+       echo " good ..copy "PDF-XChange Viewer Settings.dat" "
+
+fi
+
+       ln -sT "$windat" "$HOME/windat" 2>/dev/null
+
+echo " - - - - - - - - - - - - - - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - "
+echo
+echo
+echo
+notify-send -i "$HOME/.icons/PDF-XChange_Viewer_Logo.png" "win10 (PDF) Hightlight"
+
+## -- for opening file with PDF-XChange Viewer
+PDFXview="$HOME/.local/share/wineprefixes/default/drive_c/Program Files/Tracker Software/PDF Viewer/PDFXCview.exe"
+file=$(winepath -w "$*")
+wine "$PDFXview" "$file" &> /dev/null & disown ; exit

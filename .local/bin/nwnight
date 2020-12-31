@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+##
+##
+dual_none
+
+cd "/home/alex/.local/share/wineprefixes/default/drive_c/GOG Games/NWN Diamond"
+wine nwmain.exe

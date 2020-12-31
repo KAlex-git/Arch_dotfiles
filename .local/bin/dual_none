@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+#
+#
+WM=$(ps -A | egrep -i "bspwm|dwm" | head -1 | awk '{print $4}')
+2scrOFF=$(xrandr --output LVDS-1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output VGA-1 --off --output HDMI-1 --off)
+
+
+
+if [[ "$WM" == dwm ]]; then
+	"$2scrOFF"
+	notify-send 'dwm'
+else
+	"$2scr"
+
+	pgrep -u $UID -x polybar && killall -q polybar
+	$HOME/.config/polybar/launchpolybar.sh | $SHELL & disown ;exit
+
+	notify-send 'bspwm'
+
+fi

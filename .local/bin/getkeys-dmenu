@@ -1,0 +1,22 @@
+#!/bin/sh
+
+ file="$HOME/.local/share/larbs/getkeys/"
+
+ case "$( ls $file | dmenu -i -l 200 -fn Monospace-9 -p "key programm" )" in
+	 "Что_означает_dev_null.pdf" )
+	 			$READER	     "$file/Что_означает_dev_null.pdf" ;;
+ 	"grep") 		$TERMINAL -e $EDITOR "$file/grep" ;;
+ 	"calcurse") 		$TERMINAL -e $EDITOR "$file/calcurse" ;;
+ 	"i3")                   $TERMINAL -e $EDITOR "$file/i3" ;;
+ 	"Как_и_что_использовать_в_логических_операциях_в_sh.pdf")                  			   $READER      "$file/Как_и_что_использовать_в_логических_операциях_в_sh.pdf" ;;
+ 	"ncmpcpp")  		$TERMINAL -e $EDITOR "$file/ncmpcpp";;
+ 	"ncmpcpp_cheat_sheet.pdf")  		$READER "$file/ncmpcpp_cheat_sheet.pdf";;
+	"lf_GoDoc.pdf")		$READER	     "$file/lf_GoDoc.pdf" ;;
+	"MIME-типы_и_расширения_файлов.pdf")
+				$READER	     "$file/MIME-типы_и_расширения_файлов.pdf" ;;
+ 	"mutt") 		$TERMINAL -e $EDITOR "$file/mutt" ;;
+ 	"sxiv") 		$TERMINAL -e $EDITOR "$file/sxiv";;
+ 	"zathura")		$TERMINAL -e $EDITOR "$file/zathura";;
+ 	"qutebrowser")		$TERMINAL -e $EDITOR "$file/qutebrowser";;
+
+ esac

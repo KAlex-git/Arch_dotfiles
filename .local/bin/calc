@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+##
+##
+tmux new-session -d 'bc -l'
+tmux -2 attach-session -d

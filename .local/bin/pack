@@ -1,0 +1,60 @@
+#!/usr//bin/sh
+##
+#source $HOME/.local/bin/shellColor.sh
+##
+##
+##
+## >/dev/null 2>$1 	# hidden error
+####################################
+####################################
+
+####################################################
+##
+##										PACK
+##
+####################################################
+#{{{ ----- Variable
+day="$(date '+%Y%m%d_%a_%H:%M:%S').tgz"		# add file name (date.tgz)
+dest="/mnt/backup" 				# Where to backup to.
+f="$PWD/$1"
+fname=`basename ${1:-.}`
+
+#{{{ ----- backup tar # https://ubuntu.com/server/docs/backups-shell-scripts
+atar(){
+# Create tar arhive
+	ptf="$dest/$fname"
+	tar czfP "$ptf"_"$day" "$f"
+}
+#}}} ----- backup tar
+
+
+	echo "___________________________________"
+	echo -e "\t     Мain Menu\n\t--== ${filename} ==--"
+	echo "___________________________________"
+	echo "[t] pack: *.tgz"
+	echo "[r] backup copy (rsync): "
+	echo "[u] unpack backup copy: *.tgz"
+	echo "[q] Exit/Stop"
+	echo "===================================="
+	## 'read -s' скрывает символы на экран
+       	read choi
+				case "$choi" in
+		t) atar &&\
+			e_warning "$dest";
+			e_success "done" ||\
+			e_error "viewer in /mnt/backup"
+						;;
+		r)local f="$PWD/$1"					# full path to file (for rsync)
+			rsync -azvh --progress "${f}" $dest &&\
+			e_warning "$dest";
+			e_success "done" ||\
+			e_error "viewer in /mnt/backup/"
+			;;
+		u) cd /; echo -n "$@" '[y/n] ' ; read -r ans ;
+		    case "$ans" in
+			y|Y) sudo tar -xzvf $dest/"$1" ;;
+			*) notify-send "Ошибочка дружочек," "Ошибочка" ;;
+		    esac ;;
+		q)  exit 0 ;;
+	esac
+exit 0

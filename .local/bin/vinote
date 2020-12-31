@@ -1,0 +1,33 @@
+#!/bin/sh
+# some choice programs to use to open it.
+#
+# Linux
+notify-send 'vinote' 'copy buffer writer'
+TMPFILE_DIR=/tmp/vinote
+TMPFILE=$TMPFILE_DIR/doc-$(date +"%Y.%m.%d_%H.%M.%S")
+mkdir -p $TMPFILE_DIR
+touch $TMPFILE
+
+if [[ $OSTYPE == "linux-gnu" ]]; then
+  chmod +x $TMPFILE # Make file only readable by you
+  $EDITOR $TMPFILE
+  cat $TMPFILE | xclip -selection clipboard
+fi
+
+
+## vinote record write ....
+#vin(){
+#dir="/tmp/vinote"
+#Cyan="\e[96m" ;reset="\e[0m"
+#while true; do
+#	echo " press ( s ) >> preview { .../tmp/vinote/* } "
+#	echo " press ( o ) >> open last file"
+#	echo " press ( m ) >> delete { .../tmp/vinote/* } "
+#       	read choi
+#	case "$choi" in
+#		s) clear; echo -e "${Cyan}`ls /tmp/vinote/ | sort -r`${reset}" ;;
+#        o) find $dir | sort -r | head -n 1 | xargs -I {} $EDITOR "{}" ; break;;
+#        m) sudo rm -rf $dir/*; ls -la /tmp/vinote/ | sort -r ; break;;
+#    esac
+#done
+#}

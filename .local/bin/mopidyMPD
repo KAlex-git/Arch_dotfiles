@@ -1,0 +1,15 @@
+#!/bin/sh
+##
+##
+mopidy="/usr/bin/mopidy --config /home/alex/.config/mopidy/mopidy.conf"
+if [[ ! -z $(pgrep -xU $UID mpd) ]]; then
+	sudo killall -q mpd
+
+	[[ -z $(pgrep -xU $UID $mopidy ) ]] &&\
+	notify-send -i "~/.local/share/icons/soundcloud .png" "S" ;\
+	$mopidy || sudo killall -q mopidy ; $mopidy
+	else
+		[[ -z $(pgrep -xU $UID $mopidy ) ]] &&\
+		notify-send -i "~/.local/share/icons/soundcloud .png" "S" ;\
+		$mopidy || sudo killall -q mopidy ; $mopidy
+fi

@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+##
+##
+
+ file="$HOME/Documents/rsl/Bible"
+
+ dm(){ dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -l 22 -p "choice" ;}
+
+ case "$( ls $file | dmenu -i -l 22 -fn Monospace-9 -p "key programm" )" in
+
+	01_Бт)  	ls $file/01_Бт/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"  ;;
+	02_Исх)		ls $file/02_Исх/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"  ;;
+	03_Лт)		ls $file/03_Лт/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}" 	;;
+	04_Чс)		ls $file/04_Чс/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	05_Вт)		ls $file/05_Вт/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	06_ИсН)		ls $file/06_ИсН/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	07_Сд)		ls $file/07_Сд/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	08_Рф)		ls $file/08_Рф/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	09_1См)		ls $file/09_1См/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	10_2См)		ls $file/10_2См/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	11_1Цр)		ls $file/11_1Цр/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	12_2Цр)		ls $file/12_2Цр/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	13_1Лт)		ls $file/13_1Лт/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	14_2Лт)		ls $file/14_2Лт/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	15_Езд)		ls $file/15_Езд/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	16_Не)		ls $file/16_Не/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	17_Эсф)		ls $file/17_Эсф/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	18_Иов)		ls $file/18_Иов/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	19_Пс)		ls $file/19_Пс/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	22_Пр)		ls $file/22_Пр/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	21_Эк)		ls $file/21_Эк/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	22_Псн)		ls $file/22_Псн/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	23_Иса)		ls $file/23_Иса/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	24_Иер)		ls $file/24_Иер/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	25_Пл)		ls $file/25_Пл/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	26_Иез)		ls $file/26_Иез/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	27_Дан)		ls $file/27_Дан/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	28_Ос)		ls $file/28_Ос/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	29_Ил)		ls $file/29_Ил/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	30_Ам)		ls $file/30_Ам/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	31_Авд)		ls $file/31_Авд/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	32_Ион)		ls $file/32_Ион/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	33_Мх)		ls $file/33_Мх/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	34_На)		ls $file/34_На/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	35_Авв)		ls $file/35_Авв/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	36_Сф)		ls $file/36_Сф/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	37_Аг)		ls $file/37_Аг/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	38_Зх)		ls $file/38_Зх/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	39_Мл)		ls $file/39_Мл/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	40_Мф)		ls $file/40_Мф/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	41_Мк)		ls $file/41_Мк/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	42_Лк)		ls $file/42_Лк/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	43_Ин)		ls $file/43_Ин/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	44_Де)		ls $file/44_Де/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	45_Рм)		ls $file/45_Рм/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	46_1Кр)		ls $file/46_1Кр/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	47_2Кр)		ls $file/47_2Кр/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	48_Гл)		ls $file/48_Гл/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	49_Эф)		ls $file/49_Эф/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	50_Фп)		ls $file/50_Фп/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	51_Кл)		ls $file/51_Кл/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	52_1Фс)		ls $file/52_1Фс/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	53_2Фс)		ls $file/53_2Фс/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	54_1Тм)		ls $file/54_1Тм/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	55_2Тм)		ls $file/55_2Тм/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	56_Тит)		ls $file/56_Тит/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	57_Фм)		ls $file/57_Фм/*  | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	58_Евр)		ls $file/58_Евр/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	59_Иак)		ls $file/59_Иак/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	60_1Пт)		ls $file/60_1Пт/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	61_2Пт)		ls $file/61_2Пт/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	62_1Ин)		ls $file/62_1Ин/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	63_2Ин)		ls $file/63_2Ин/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	64_3Ин)		ls $file/64_3Ин/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	65_Иуды)	ls $file/65_Иуды/*| dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+	66_Отк)		ls $file/66_Отк/* | dm | xargs -I {} mpv --really-quiet --title="bi12 (Bible)" "{}"	;;
+ esac

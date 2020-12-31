@@ -1,0 +1,56 @@
+#!/bin/bash
+#
+
+#read -n 1 -p "Ты уверен, что хочешь запустить это (y/[a]): " AMSURE
+#[ "$AMSURE" = "y" ] || exit
+#echo "" 1>&2
+
+echo " 	    Конвектирование в:"
+echo "          	------"
+echo
+echo "[a]udio	    -= mp3 =-"
+echo "[7]20p	    -= 720p =-"
+echo "[4]80p	    -= 480p =-"
+echo "[3]60p	    -= 360p =-"
+echo "[1]080p	    -= 1080p =-"
+echo
+echo
+echo
+echo "[s]pli{a}and{7}	    -= split 1)audio & 2)video =-"
+
+read choice
+
+case "$choice" in
+    "7"|*mkv|*mp4)
+	ffmpeg -i $1 -preset slow  -b:a 128k -codec:v libx264 -pix_fmt yuv420p \
+	-b:v 2500k -minrate 1500k -maxrate 4000k -bufsize 5000k -vf scale=-1:720 \
+	intro-720p.mp4
+		;;
+    "4"|*mkv|*mp4)
+	setsid ffmpeg -i $1 -preset slow -b:a 128k -codec:v libx264 -pix_fmt yuv420p \
+	-b:v 1000k -minrate 500k -maxrate 2000k -bufsize 2000k \
+	intro-480p.mp4
+		;;
+    "3"|*mkv|*mp4)
+	ffmpeg -i $1 -preset slow -b:a 128k -codec:v libx264 -pix_fmt yuv420p \
+	-b:v 750k -minrate 400k -maxrate 1000k -bufsize 1500k -vf scale=-1:360 \
+	intro-360p.mp4
+		;;
+    "1"|*mkv|*mp4)
+	ffmpeg -i $1 -preset slow -codec:a libfdk_aac -b:a 128k -codec:v libx264 -pix_fmt yuv420p \
+	-b:v 4500k -minrate 4500k -maxrate 9000k -bufsize 9000k -vf scale=-1:1080 \
+	intro-1080p.mp4
+		;;
+    a|*mp4|*m4a|*flac|*opus|*webm)
+			fname=$(basename "$1")
+			fbname=${fname%.*}
+			ffmpeg -i $1 -b:a 192K -vn $fbname.mp3 ;;
+    "s")
+			#ffmpeg -i $1 -i $2 -acodec libmp3lame -vcodec copy split_720p.mp4
+		ffmpeg -i $1 -i $2 -acodec libmp3lame -vcodec copy split_720p.mp4
+		;;
+
+    *)
+esac
+
+exit 0

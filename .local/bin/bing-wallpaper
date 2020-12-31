@@ -1,0 +1,24 @@
+#!/usr/bin/sh
+#
+#
+#
+# command ' uniq '  			- фильтрует дубликаты
+# command ' sort '  			- упорядочивает по алфовиту
+# command ' sed 's/^/https:\/\//g' '  	- вставляет при вхождении 'https://'
+#
+#
+#
+#######################################################################################
+pic(){
+rm $HOME/background.jpg && echo "done"
+
+wget -O - https://bingwallpaper.anerg.com/ |\
+	grep -Eo "bing.nanxiongnandi.com/202012[^&]+jpg" | sed 's/^/https:\/\//g' | uniq |\
+shuf -n 1 |\
+    xargs wget -O background.jpg &&  feh --bg-fill $HOME/background.jpg; notify-send -i "$HOME/.local/share/icons/bing_1.png" "download complete " || echo "error"
+}
+
+while true; do
+	pic
+	sleep 3h
+done

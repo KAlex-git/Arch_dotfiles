@@ -1,0 +1,12 @@
+#!/bin/sh
+##
+##
+if [[ ! -z $(pgrep -xU $UID mopidy) ]]; then
+		sudo killall -q mopidy
+		notify-send -i "~/.local/share/icons/mpd.png" "M"
+		mpd
+	else
+		sudo killall -q mopidy
+		notify-send -i "~/.local/share/icons/mpd.png" "M"
+		mpd
+fi

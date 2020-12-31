@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# $1 is a url; $2 is a command
+[ -z "$1" ] && exit
+base="$(basename "$1")"
+notify-send "⏳ downloads $base..."
+wget -c $1 -P ~/Downloads/
+open ~/Downloads/$base
+idnum="$(tsp "$cmd" "$1")"
+realname="$(echo "$base" | sed "s/?\(source\|dest\).*//;s/%20/ /g")"
+
+tsp -D "$idnum" notify-send "👍 $realname done."
+
+## enable dmenu
+choice="delete\nNo"
+
+chosen=$(echo -e "$choice" | dmenu -i -p "'$base'?")
+case "$chosen" in
+    delete) rm ~/Downloads/$base ;;
+    No) echo " I have "$base"" ;;
+esac

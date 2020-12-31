@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+
+filename="${1%.*}"
+pdftoppm -png "$1" $filename | xargs -0 mv $filename-1.png $filename.png
+
+
+RED="\033[0;31m" ; ORANGE="\033[33m" ; PURPLE="\033[45m";
+blink="\e[5m" ;
+##
+clear
+##
+printf "$RED rename to:\n$ORANGE$blink$filename.png\n"
+
+open $filename.png
