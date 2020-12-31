@@ -33,4 +33,4 @@ papersize: a5
 
 ![][logo]
 
-[zsh-git]:  ($HOME/dev/Arch_dotfiles/.config/zsh/zsh-git.png)
+[zsh-git]:  (https://github.com/KAlex-git/Arch_dotfiles/tree/main/.config/zsh/zsh-git.png)
