@@ -1,14 +1,9 @@
-# vim: filetype=dosini
+# vim: filetype=sh
 
 ##git aliases
 ## git status, add, commit, push
 gs(){
 	s(){
-		rsync -avzur --delete  ~/.config/{polybar,bspwm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mp,sxiv,zsh} $HOME/dev/Arch_dotfiles/.config
-		rsync -avzur --delete  ~/.local/{bin,src} $HOME/dev/Arch_dotfiles/.local
-
-		 git rev-parse HEAD > /dev/null 2>&1 || return
-		 git -c color.status=always status --short
 		 }
 
 
@@ -18,18 +13,33 @@ gs(){
 	 echo "$(ls -a)"
 while true; do
 	echo " press ( s ) >>  git git status"
-	echo " press ( a ) >>  git add -A (ALL)"
+	echo " press ( a ) >>  git add -A (ALL) & "
 	echo " press ( l ) >>  git show (просмотр последнего изменения) "
-	echo " press ( c ) >>  git commit -m "please write" "
+	echo " press ( c ) >>  git commit -m "please write" (add file; commit; push)"
 	echo " press ( d ) >> delete directory/files"
 	echo " press ( r ) >> delete directory/files (удалить файлы из репозитория на основе вашего .gitignore, не удаляя их из локальной файловой системы)"
 	echo " press ( q ) >> exit "
        	read choi
 	case "$choi" in
-        s) s ;;
-        a) git add -A; break;;																	## add all
+        s)
+					rsync -avzur --delete  ~/.config/{polybar,bspwm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mp,sxiv,zsh} $HOME/dev/Arch_dotfiles/.config
+					rsync -avzur --delete  ~/.local/{bin,src} $HOME/dev/Arch_dotfiles/.local
+
+					 git rev-parse HEAD > /dev/null 2>&1 || return
+					 git -c color.status=always status --short
+					 ;;																										## git status
+
+        a) git add -A
+					git commit -m "no commentary"
+					git push
+					break
+					;;																	## add all
         l) git show; break;;																		## просмотреть последние изменения в commits
-        c) echo -n 'commentary'; read -r write
+        c) local files=$(git ls-files --modified | fzf --ansi)
+							if [[ -n $files ]]; then
+									git add --verbose $files
+							fi
+						echo -n 'commentary'; read -r write
 						git commit -m "$write"
 						git push origin main
 						break
@@ -40,15 +50,16 @@ while true; do
 						rd $REPLY
 						git add -A
 						git commit -m "no commit"
-						git push; break
+						git push
+						break
 						;;																									## remove folder/files
         r) git rm --cached $(git ls-files .gitignore)
 						git add .gitignore
 						git commit -m "fix .gitignore"
 						git push origin main
 						break
-					;;																							## удалить файлы, папки используя изменения из файла .gitignore
-				q) break;;
+						;;																									## удалить файлы, папки используя изменения из файла .gitignore
+				q) break;;																							## выход из цикла
     esac
 done
 }
