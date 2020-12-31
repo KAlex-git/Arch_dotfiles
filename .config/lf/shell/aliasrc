@@ -541,8 +541,7 @@ o(){ if  cd "$1"; then ls -a; else open "$1" & disown ; exit; fi ;}
    gs()
    {
 	   cd /home/alex/dev/Arch_dotfiles
-		rsync -avzur --delete  ~/.config/{polybar,bspwm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mp,sxiv,zsh} ./.config
-		rsync -avzur --delete  ~/.local/{bin,src} ./.local
+		 cp -R $HOME/.config/{shell,x11,bookmenu,bspwm,htop,lf}
 	   echo "git status --untracked-files=no"
 
        git rev-parse HEAD > /dev/null 2>&1 || return
@@ -550,13 +549,16 @@ o(){ if  cd "$1"; then ls -a; else open "$1" & disown ; exit; fi ;}
 
 	    ## add all
 		echo
+		echo
 	    echo -e " add all complited"
 		echo -e "alias "gaa""
 		git add -A
 		echo
+		echo
 		## commit and push
 	    echo -e " git commit -m " "no comments" " && git push"
 		echo -e "alias "gc" "
+		echo
 		echo
 		## git commit -m "$@" && git push
 		git commit -m "no commit" && git push
@@ -827,3 +829,10 @@ fi
 
 
 }
+
+
+# Show a current active git branch in the shell prompt
+#export PS1='\t \[\033[01;32m\]\u\[\033[01;34m\] \w\[\033[01;33m\]$(__git_ps1)\[\033[01;34m\] \$\[\033[00m\] '
+
+# Shortcat for the pretty git log. Can be extended with the commit count parameter (last -10, last -35)
+alias last='git log --graph --all --oneline --decorate '
