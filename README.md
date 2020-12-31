@@ -29,21 +29,8 @@ papersize: a5
 | gimp/inkscape      | editor image                                 |
 | bookmenu           | fast acсess to files{config,video,bookmarks} |
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [link](#zsh)
+
 ![][logo]
 
-[zsh-git]:  "/Arch_dotfiles/.config/zsh/zsh-git.png "😀" "
+[zsh-git]:  (/Arch_dotfiles/.config/zsh/zsh-git.png)
