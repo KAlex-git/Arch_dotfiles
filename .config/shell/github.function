@@ -2,30 +2,52 @@
 
 ##git aliases
 ## git status, add, commit, push
-   gs()
-   {
-	   cd /home/alex/dev/Arch_dotfiles
+gs(){
+	s(){
 		rsync -avzur --delete  ~/.config/{polybar,bspwm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mp,sxiv,zsh} $HOME/dev/Arch_dotfiles/.config
 		rsync -avzur --delete  ~/.local/{bin,src} $HOME/dev/Arch_dotfiles/.local
 
 		 git rev-parse HEAD > /dev/null 2>&1 || return
 		 git -c color.status=always status --short
-
-		## add all
-		git add -A
-		## git commit -m "$@" && git push
-		git commit -m "change" && git push
-   }
-
-   gr()		## remove folder/files
+		 }
+## просмотреть последние изменения в commits
+	alias l="git show"
+## commit
+	alias c="git commit -m "$@" && git push origin main"
+## remove
+   dd()		## remove folder/files
    {
 		echo -n 'remove dir/files: '
 		read
 		rd $REPLY
 		git add -A
 		git commit -m "no commit"
-		git push origin main
+		git push
    }
+## remove commit link
+	alias r="git rm --cached `git ls-files -i -X .gitignore`"
+
+## MENU
+	 cd $HOME/dev/Arch_dotfiles/
+	 echo "$(ls -a)"
+	echo " press ( s ) >>  git git status"
+	echo " press ( a ) >>  git add -A (ALL)"
+	echo " press ( l ) >>  git show (просмотр последнего изменения) "
+	echo " press ( c ) >>  git commit -m "please write" "
+	echo " press ( d ) >> delete directory/files"
+	echo " press ( r ) >> delete directory/files (удалить файлы из репозитория на основе вашего .gitignore, не удаляя их из локальной файловой системы)"
+	echo " press ( q ) >> exit "
+       	read choi
+	case "$choi" in
+        s) s ;;
+        a) git add -A ;; ## add all
+        l) l ;;
+        c) c ;;
+        d) dd ;;
+        r) r ;;
+    esac
+}
+
 
 # ----------------------    GIT heart FZF ------------------------------------- #
 ## add 1 files (fzf)
