@@ -29,6 +29,6 @@ papersize: a5
 | gimp/inkscape      | editor image                                 |
 | bookmenu           | fast acсess to files{config,video,bookmarks} |
 
-[link](#zsh)
 
+## zsh
  ![Image alt](https://github.com/KAlex-git/Arch_dotfiles/raw/main/.config/zsh/zsh-git.png)
