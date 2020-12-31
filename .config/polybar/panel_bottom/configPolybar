@@ -73,7 +73,7 @@ modules-right = package temp volume memory cpu inet
 [module/lang]
 type = custom/script
 label-font = 6
-exec = layout
+exec = sb-layout
 label = "%output%"
 format-underline = #f10
 click-left =
@@ -134,7 +134,7 @@ label-padding-left = 2
 #{{{----------------------------------PACKAGES
 [module/packages]
 type = custom/script
-exec = pacpackages
+exec = sb-pacpackages
 label = "%output%"
 click-left = $TERMINAL -e yay -Syu
 label-padding = 1
@@ -161,7 +161,7 @@ interval = 60
 #{{{----------------------------------MAILBOX
 [module/mailbox]
 type = custom/script
-exec = mailbox
+exec = sb-mailbox
 label = "%output%"
 format-underline = #4a9eff
 click-left = $TERMINAL -e neomutt
@@ -217,7 +217,7 @@ interval = 0.5
 #{{{----------------------------------VOLUME
 [module/volume]
 type = custom/script
-exec = volume
+exec = sb-volume
 label = "%output%"
 format-underline = #4a9eff
 click-left = pamixer -t
@@ -249,7 +249,7 @@ interval = 0.5
 #{{{----------------------------------INET
 [module/inet]
 type = custom/script
-exec = internet
+exec = sb-internet
 label = "%output%"
 click-left = $TERMINAL -e nmtui
 label-underline = #f50
