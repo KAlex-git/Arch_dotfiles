@@ -49,10 +49,10 @@ while true; do
 						git push
 						break
 						;;																									## remove folder/files
-        r) git rm --cached $(git ls-files .gitignore)
+        r) git rm --cached $(git ls-files -i -X .gitignore)
 						git add .gitignore
 						git commit -m "fix .gitignore"
-						git push origin main
+						git push
 						break
 						;;																									## удалить файлы, папки используя изменения из файла .gitignore
 				q) break;;																							## выход из цикла

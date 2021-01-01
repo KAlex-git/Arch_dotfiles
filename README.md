@@ -1,3 +1,17 @@
+---
+mainfont: Arial
+documentclass: extarticle
+fontsize: 14pt
+geometry: margin=1cm
+
+<!-- title: Alexandro -->
+<!-- date: 05.11.20 -->
+tags:
+categories: [i ]
+papersize: a3
+---
+
+Base
 
 #Arch_dotfiles#
 
@@ -18,4 +32,6 @@
 
 
 ## zsh
- ![Image alt](https://github.com/KAlex-git/Arch_dotfiles/raw/main/.config/zsh/zsh-git.png)
+ ![zsh-gihub](https://github.com/KAlex-git/Arch_dotfiles/raw/main/.config/zsh/zsh-git.png)
+
+ ![sxiv](/home/alex/pic-window-210101-0156-38.gif)
