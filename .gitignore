@@ -4,14 +4,7 @@
 
 #README.md
 README.pdf
-/.local/src/dwm/dwm.orig
-/.local/src/dwm/larbs.mom
-/.local/src/dwm/.gitignore
-
-/**/.git/
-
-/.local/src/st/.git/
-/.local/src/st/.gitignore
-
-/.local/src/dwmblocks/.git/
-/.local/src/dwmblocks/.gitignore
+/**/**/**/dwm.orig
+/**/**/**/larbs.mom
+/**/**/**/.git/
+/**/**/**/.gitignore
