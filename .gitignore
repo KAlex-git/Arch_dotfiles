@@ -8,7 +8,7 @@ README.pdf
 /.local/src/dwm/larbs.mom
 /.local/src/dwm/.gitignore
 
-/.local/src/dmenu/.git/
+/**/.git/
 
 /.local/src/st/.git/
 /.local/src/st/.gitignore
