@@ -1,4 +1,5 @@
-set previewer ~/.config/lf/preview
+#set previewer ~/.config/lf/preview
+set previewer ~/.config/lf/pv.sh
 
 
 
