@@ -34,4 +34,4 @@ Base
 ## zsh
  ![zsh-gihub](https://github.com/KAlex-git/Arch_dotfiles/raw/main/.config/zsh/zsh-git.png)
 
- ![sxiv](/home/alex/pic-window-210101-0156-38.gif)
+ ![sxiv](https://github.com/KAlex-git/Arch_dotfiles/tree/main/images/ncmpcpp.gif)
