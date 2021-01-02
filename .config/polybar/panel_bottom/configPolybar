@@ -17,7 +17,6 @@ screenchange-reload = true
 #{{{----------------------------------BOTTOM
 [bar/bottom]
 monitor = ${env:MONITOR:LVDS-1}
-monitor-fallback =
 monitor-strict = false
 monitor-exact = true
 override-redirect = false
@@ -67,9 +66,63 @@ spacing = 0
 
 modules-left = lang bspwm title
 modules-center = time
-modules-right = package temp volume memory cpu inet
+modules-right = packages mailbox temp volume memory cpu inet
 #}}}----------------------------------BOTTOM
-#{{{----------------------------------LANG
+
+[bar/bottom_external]
+monitor = ${env:MONITOR:VGA-1}
+monitor-strict = false
+monitor-exact = true
+override-redirect = false
+wm-restack = bspwm
+;separator = 
+;separator-foreground = #000
+;enable-ipc = true
+fixed-center = false
+bottom = false
+width = 100%
+height = 25
+offset-x = 0
+offset-y = -4
+radius = 0.6
+underline-size = 2
+overline-size = 0
+
+line-size = 3
+line-color = #f00
+border-size = 4
+border-color = #00000000
+padding-left = 0
+padding-right = 0
+module-margin-left = 0
+module-margin-right = 0
+font-0 = fixed:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
+font-3 = FontAwesome 5 Free:size=10:style=Solid;3
+font-4 = JetBrainsMonoMedium:pixelsize=12;
+font-5 = "Noto Sans:size=11;1"
+font-6 = JetBrainsMonoMedium:pixelsize=12;
+font-7 = HackNerdFont:pixelsize=10;
+font-8 = NotoColorEmoji:fontformat=truetype:scale=10:antialias=false;
+font-9 = "NotoSans Nerd Font:style=Medium:size=11:antialias=true;3"
+
+tray-detached = false
+tray-position = right
+tray-offset-x = 0
+tray-offset-y = 0
+tray-maxsize = 16
+tray-padding = 0
+tray-scale = 1
+cursor-click = pointer
+cursor-scroll = ns-resize
+spacing = 0
+
+modules-left = lang bspwm title
+modules-center = time
+modules-right = packages mailbox temp volume memory cpu inet
+
+#}}}----------------------------------BOTTOM
 [module/lang]
 type = custom/script
 label-font = 6
@@ -90,8 +143,9 @@ interval = 0.2
 [module/bspwm]
 type = internal/bspwm
 enable-click = true
-enable-scroll = true
 format = <label-state>
+index-sort = true
+wrapping-scroll = false
 
 label-active = %name%
 label-active-foreground = #ffffff
@@ -129,7 +183,7 @@ scroll-down = bspwm-deskprev
 [module/title]
 type = internal/xwindow
 label = %title:0:30:...%
-label-padding-left = 2
+label-padding-left = 4
 #}}}----------------------------------TITLE
 #{{{----------------------------------PACKAGES
 [module/packages]
@@ -159,16 +213,21 @@ label-padding = 3
 interval = 60
 #}}}----------------------------------TIME
 #{{{----------------------------------MAILBOX
+# [module/mailbox]
+# type = custom/script
+# exec = sb-mailbox
+# label = "%output%"
+# format-underline = #4a9eff
+# click-left = $TERMINAL -e neomutt
+# click-right =  $TERMINAL -e neomut
+# label-padding = 1
+# #interval = 1
 [module/mailbox]
-type = custom/script
-exec = sb-mailbox
-label = "%output%"
-format-underline = #4a9eff
-click-left = $TERMINAL -e neomutt
-click-right =  $TERMINAL -e neomut
-label-padding = 1
-#interval = 1
-
+type = custom/ipc
+hook-0 = unread="$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/mail/*/[Ii][Nn][Bb][Oo][Xx]/new/* -type f | wc -l 2>/dev/null)"; pidof mbsync >/dev/null 2>&1 && icon="🔃"; [ "$unread" = "0" ] && [ "$icon" = "" ] || echo "📬$unread$icon"
+format-prefix = " "
+click-left =
+#initial = 1
 #}}}----------------------------------MAILBOX
 #{{{----------------------------------TEMP
 [module/temp]
@@ -181,7 +240,7 @@ format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 label = %temperature-c%
 label-warn = %temperature-c%
-label-warn-foreground = ${colors.secondary}
+label-warn-foreground = #fff
 #ramp-0 = 
 #ramp-1 = 
 #ramp-2 = 
