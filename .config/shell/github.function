@@ -17,7 +17,7 @@ while true; do
        	read choi
 	case "$choi" in
         s)
-					rsync -avzur --delete  ~/.config/{polybar,bspwm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mpv,sxiv,zsh} $HOME/dev/Arch_dotfiles/.config
+					rsync -avzur --delete  --exclude "mpv_later/" --include "~/.config/{polybar,bspwm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mpv,sxiv,zsh}" $HOME/dev/Arch_dotfiles/.config
 					rsync -avzur --delete  --exclude ".git/" --exclude ".gitignore" --include "~/.local/{bin,src}" $HOME/dev/Arch_dotfiles/.local
 
 					 git rev-parse HEAD > /dev/null 2>&1 || return
