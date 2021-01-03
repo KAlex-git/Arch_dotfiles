@@ -43,6 +43,7 @@ sniALL:/home/alex/.config/nvim/UltiSnips/all.snippets
 sniTEX:/home/alex/.config/nvim/UltiSnips/tex.snippets
 sniSH:/home/alex/.config/nvim/UltiSnips/sh.snippets
 sniMarkdown:/home/alex/.config/nvim/UltiSnips/markdown.snippets
+gihubConfig:/home/alex/.config/shell/github.function
 
 gimp:/home/alex/.config/install_system/Gimp/Gimp.pdf
 grafik_Read_bible:/home/alex/vimwiki/график.md

@@ -20,8 +20,8 @@ xcape -e Super_L Escape
 . "$HOME/.profile"
 #ssh-agent dwm
 
-#session=${1:-dwm} 
-session=${1:-bspwm}
+session=${1:-dwm} 
+#session=${1:-bspwm}
 
 case $session in
     dwm) 	exec ssh-agent dwm;;
