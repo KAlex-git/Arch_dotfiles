@@ -24,8 +24,8 @@ while true; do
 					rsync -avzur --delete "$HOME/.config/x11" "$HOME/dev/Arch_dotfiles/.config"
 					rsync -avzur --delete "$HOME/.config/bookmenu" "$HOME/dev/Arch_dotfiles/.config"
 					rsync -avzur --delete "$HOME/.config/lf" "$HOME/dev/Arch_dotfiles/.config"
-					rsync -avzur --delete --exclude "plugged" --include "$HOME/.config/nvim" "$HOME/dev/Arch_dotfiles/.config"
-					rsync -avzur --delete --exclude "watch_later" --include "$HOME/.config/mpv" "$HOME/dev/Arch_dotfiles/.config"
+					rsync -avzur --delete --exclude "plugged" --exclude "$HOME/.config/nvim" "$HOME/dev/Arch_dotfiles/.config"
+					rsync -avzur --delete --exclude "watch_later" --exclude "$HOME/.config/mpv" "$HOME/dev/Arch_dotfiles/.config"
 					rsync -avzur --delete "$HOME/.config/sxiv" "$HOME/dev/Arch_dotfiles/.config"
 					rsync -avzur --delete "$HOME/.config/zsh" "$HOME/dev/Arch_dotfiles/.config"
 					#rsync -avzur --delete  --exclude ".git/" --exclude ".gitignore" --include "~/.local/{bin,src}" $HOME/dev/Arch_dotfiles/.local
