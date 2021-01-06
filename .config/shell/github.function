@@ -24,6 +24,7 @@ while true; do
 					rsync -avzur --delete "$HOME/.config/x11" "$HOME/dev/Arch_dotfiles/.config"
 					rsync -avzur --delete "$HOME/.config/bookmenu" "$HOME/dev/Arch_dotfiles/.config"
 					rsync -avzur --delete "$HOME/.config/lf" "$HOME/dev/Arch_dotfiles/.config"
+					rsync -avzur --delete "$HOME/.config/sxhkd" "$HOME/dev/Arch_dotfiles/.config"
 
 					rsync -avzur --delete "$HOME/.config/nvim/UltiSnips" "$HOME/dev/Arch_dotfiles/.config/nvim"
 					rsync -avzur --delete "$HOME/.config/nvim/colors" "$HOME/dev/Arch_dotfiles/.config/nvim"
