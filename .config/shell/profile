@@ -12,8 +12,8 @@ unsetopt PROMPT_SP
 
 # Default programs:
 export EDITOR="nvim"
-#export TERMINAL="alacritty"
-export TERMINAL="st"
+export TERMINAL="alacritty"
+#export TERMINAL="st"
 export BROWSER="brave"
 export READER="zathura"
 export TEXT="wps"
@@ -45,6 +45,7 @@ export UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
 export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 export ABOOK="abook -C $HOME/.config/abook/abookrc"
+export CC=clang CXX=clang++
 
 # Other program settings:
 export DICS="/usr/share/stardict/dic/"
@@ -177,6 +178,5 @@ fi
 ########################################
 ########################################
 source /home/alex/.local/bin/shellColor.sh
+source $HOME/.config/shell/aliasrc
 ########################################
-#export QT_DEVICE_PIXEL_RATIO=2
-#export QT_AUTO_SCREEN_SCALE_FACTOR=true

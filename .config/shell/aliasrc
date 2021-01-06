@@ -34,9 +34,10 @@ alias fontUpdate="sudo fc-cache -f -v"
 #mkd="mkdir -pv" \
 
 # Colorize commands when possible.
+	#ls="ls -hN --color=auto --group-directories-first" \
 alias \
-	ll="ls -lahNG --color=auto --group-directories-first" \
-	ls="ls -hN --color=auto --group-directories-first" \
+	ll='colorls -ra --sf'\
+	ls="colorls --sf " \
 	la="locate "$1"" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
@@ -231,41 +232,22 @@ csv (){
 			fi
 	}
 
+ff() { cd $HOME ;du -a ~/.local/bin/* | awk '{print $2}' | fzf | xargs -r -I % $EDITOR % && disown ; exit ;}
 
-# find
-ff() {
-  SEARCH_PATH=$2
-
-  if [[ -z $SEARCH_PATH ]]; then
-    SEARCH_PATH=.
-  fi
-
-  find $SEARCH_PATH -maxdepth 3 | grep -i "$1"
-}
+## find
+#ff() {
+#  SEARCH_PATH=$2
+#
+#  if [[ -z $SEARCH_PATH ]]; then
+#    SEARCH_PATH=.
+#  fi
+#
+#  find $SEARCH_PATH -maxdepth 3 | grep -i "$1"
+#}
 
 ## -- END -------------- find && rename
 
 
-
-## Установка нужного npm пакета
-fnpm() {
-    local packages
-    packages=$(all-the-package-names | fzf -m) &&
-    echo "$packages" &&
-    npm i $(echo $packages)
-}
-
-
-##  Убить процесс
-fkill() {
-  local pid
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-
-  if [ "x$pid" != "x" ]
-  then
-    echo $pid | xargs kill -${1:-9}
-  fi
-}
 
 
 ##
@@ -306,30 +288,6 @@ fkill() {
 ##pbcopy(){ xclip -selection clipboard ;}
 ##pbpaste(){ xclip -out -selection clipboard ;}
 
-
-## isom - mount selected iso to selected mount point
-##usage: im <iso>
-   im()
-   {
-		dir="/mnt/iso/"
-		if [[ -d "$dir" ]]; then
-				sudo mount -o loop $PWD/"$@" $dir
-				#sudo chown -R alex:users ${dir}
-				cd $dir ; ls -a $dir
-		else
-				sudo mkdir $dir
-				sudo mount -o loop $PWD/"$@" $dir
-				sudo chown -R alex:users ${dir}
-				cd $dir && ls -a $dir
-		fi
-		return 0	## возвращает результат работы
-   }
-
-
-   um() { cd ~; dir="/mnt/iso/"; sudo umount $dir;  }
-
-
-mnu() { lf /mnt/usb ; }
 win10(){
 		dir="/mnt/win10/Users/Alex/Desktop"
 		if [[ -d "$dir" ]]; then
@@ -345,9 +303,6 @@ win10(){
 		fi
 		return 0	## возвращает результат работы
    }
-
-# mount dir. ( если монтируем через bashmount )
-rma() { cd /run/media/alex ; lf ;}
 
 ## make folder and permissions
 ad()
@@ -370,33 +325,14 @@ af()
 	$EDITOR $REPLY ; echo " $REPLY " | xclip -selection clipboard
 }
 
-## mpv wrapper ...
-#m()
-#{
-#     ## https://gregjs.com/linux/2016/playing-videos-with-mpv-and-a-wrapper-for-immediately-disowning-a-process/
-#	 ## mpv wrapper to make it run in the background and disowned by the terminal window
-#		mpv --really-quiet --title="mpvfloat" "$@" &
-#		disown & exit
-#}
 
-
-##
-##
-   transfe()
-   {
-       if [ $# -eq 0 ]; then
-           echo "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md";
-           return 1;
-       fi
-       tmpfile=$( mktemp -t transferXXX );
-    if tty -s; then
-        basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g');
-        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile;
-    else
-        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ;
-    fi;
-    cat $tmpfile; rm -f $tmpfile;
-   }
+##using curl
+transfer() {
+		#tar -czf - "$@" | curl --upload-file - https://transfer.sh/1.tar.gz
+    curl --progress-bar --upload-file "$1" https://transfer.sh/$(basename $1) -H "Max-Downloads: 14" | tee > file_transfer && \
+		cat file_transfer
+		cat $HOME/file_transfer |	mutt -s 'pass (tranfer.sh) ' akalashnic@gmail.com -a $HOME/file_transfer 2>1
+}
 
 ## translate-shell
 	tlr(){

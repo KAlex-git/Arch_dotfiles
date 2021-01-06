@@ -15,13 +15,15 @@ else
 	. "$HOME/.xprofile"
 fi
 
+xkbcomp /home/alex/.config/xkb/my $DISPLAY
+
 setxkbmap -layout "us,ru" -option 'grp:ctrl_shift_toggle' &
 xcape -e Super_L Escape
 . "$HOME/.profile"
 #ssh-agent dwm
 
-session=${1:-dwm} 
-#session=${1:-bspwm}
+#session=${1:-dwm}
+session=${1:-bspwm}
 
 case $session in
     dwm) 	exec ssh-agent dwm;;

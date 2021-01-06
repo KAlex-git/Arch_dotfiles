@@ -1,5 +1,4 @@
-#set previewer ~/.config/lf/preview
-set previewer ~/.config/lf/pv.sh
+set previewer ~/.config/lf/preview
 
 
 
@@ -135,16 +134,8 @@ cmd paste_link %{{
   done
 }}
 
-#** symlink ver.1
-cmd symlnk ${{
-    set -f
-    for file in "$fx"
-    do
-        ln -s $file .
-    done
-}}
-map L :{{
-    symlnk
+map unLink :{{
+    symlink
     unselect
 }}
 
@@ -255,6 +246,10 @@ map d
 map i
 map e
 map g
+map f
+map fd
+map fc
+map fm
 map y
 map r
 map p
@@ -308,6 +303,7 @@ map ag 					tgz
 map ab 					tarbz2
 # select / unselect
 map ud					clear
+map ul					unLink
 map ui					:unselect; invert
 map un 					push :glob-unselect<space>*.
 map uy					clear
@@ -334,25 +330,22 @@ map og !gimp "$f"
 
 #* FAST DIRS
 # >> fast dirs start
-map f
-map fd
-map fc
-map fm
-map fh				$lf -remote "send $id cd ~"
-map fcc				$lf -remote "send $id cd ~/.config/"
-map fci				$lf -remote "send $id cd ~/.config/install_system"
-map flb				$lf -remote "send $id cd ~/.local/bin"
-map fls				$lf -remote "send $id cd ~/.local/share"
-map fdd				$lf -remote "send $id cd ~/Documents"
 map fdb				$lf -remote "send $id cd ~/Documents/BOOKS"
+map fdd				$lf -remote "send $id cd ~/Documents"
+map fci				$lf -remote "send $id cd ~/.config/install_system"
+map fcc				$lf -remote "send $id cd ~/.config/"
 map fD				$lf -remote "send $id cd ~/Downloads"
+map fh				$lf -remote "send $id cd ~"
+map fls				$lf -remote "send $id cd ~/.local/share"
+map flb				$lf -remote "send $id cd ~/.local/bin"
+map fmn				$lf -remote "send $id cd /mnt"
 map fmm				$lf -remote "send $id cd ~/Music"
-map fp				$lf -remote "send $id cd ~/Pictures"
-map fv				$lf -remote "send $id cd ~/Videos"
+map fpp				$lf -remote "send $id cd ~/Pictures"
+map fvv				$lf -remote "send $id cd ~/Videos"
 map ft				$lf -remote "send $id cd ~/tmp"
 map f/				$lf -remote "send $id cd /"
-map fmn				$lf -remote "send $id cd /mnt"
-map fma				$lf -remote "send $id cd /mnt/alex"
+map fmi				$lf -remote "send $id cd /mnt/iso"
+map fmu				$lf -remote "send $id cd /mnt/usb"
 
 # >> fast dirs end
 
@@ -385,20 +378,9 @@ map s<a-p> :{{
 }}
 
 map sP :{{
-    set preview
+    set previewer ~/.config/lf/preview
     set ratios 1:2
 }}
 
 
 ##########################
-
-cmd video_preview ${{
-    CACHE=$(mktemp /tmp/thumb_cache.XXXXX)
-    ffmpegthumbnailer -i "$f" -o $CACHE -s 0
-    ~/.config/lf/draw_img $CACHE && rm $CACHE
-}}
-map + :video_preview
-
-
-# Not really image preview
-map - $~/.config/lf/draw_img "$f"

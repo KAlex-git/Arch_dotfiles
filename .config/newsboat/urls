@@ -1,0 +1,83 @@
+#vim ~/.config/newsboat/urls
+
+# -------- Query Feeds {{{
+# ------------------------------------------------------
+# query feeds
+# query:<name of feed>:<filter expression> [<tag> ...]
+#
+# ------------------------------------------------------
+# https://newsboat.org/releases/2.11.1/docs/newsboat.html#_filter_language
+# https://newsboat.org/releases/2.10.2/docs/newsboat.html
+#"query:Only 720p:tags =~ \"BTRSS\" and ( title =~ \"720p\" )" "BTRSS"
+#"query:Only 1080p:tags =~ \"BTRSS\" and ( title =~ \"1080p\" )" "BTRSS"
+#"query:Only SD:tags =~ \"BTRSS\" and ( title =~ \"hdtv|x264|web\" )" "BTRSS"
+# ------------------------------------------------------
+"query:Study - Октябрь:tags =~ \"Study_wU_MP3\" and ( content =~ \" Октябрь\" )" "Study_wU_MP3"
+"query:Study -Ноябрь:tags =~ \"Study_wU_MP3\" and ( content =~ \"Ноябрь\" )" "Study_wU_MP3"
+"query:Study -Декабрь:tags =~ \"Study_wU_MP3\" and ( content =~ \"Декабрь\" )" "Study_wU_MP3"
+"query:Study -Январь:tags =~ \"Study_wU_MP3\" and ( content =~ \"Январь\" )" "Study_wU_MP3"
+# ------------------------------------------------------
+"query:Study_wU:tags # \"Study_wU_MP3\"" "Study_wpU_MP3"
+# }}}
+
+
+
+------------------------------
+----------JW.ORG------------
+------------------------------
+https://www.jw.org/ru/%D0%BD%D0%BE%D0%B2%D0%BE%D0%B5/rss/WhatsNewWebArticles/feed.xml "jw"
+https://www.jw.org/ru/%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8/jw/rss/NewsSubsectionRSSFeed/feed.xml "~JW: NEWS" "jw"
+----------wU------------
+https://apps.jw.org/U_RSSMEDIAMAG?rln=U&rmn=w&rfm=mp3 	"~JW: wU  MP3 'Watchtower (Study)'" "Study" tag1
+https://apps.jw.org/RSL_RSSMEDIAMAG?rln=U&rmn=w&rfm=pdf&rpf=&rpe=   "~JW: wU  PDF 'Watchtower (Study)'" "Study"
+https://apps.jw.org/U_RSSMEDIAMAG?rln=U&rmn=w&rfm=epub    "~JW: wU  EPUB 'Watchtower (Study)'" "Study"
+https://apps.jw.org/RSL_RSSMEDIAMAG?rln=RSL&rmn=w&rfm=mp4           	"~JW: wRSL MP4 'Watchtower (Study)'" "Study"
+https://apps.jw.org/RSL_RSSMEDIAMAG?rln=RSL&rmn=wsh&rfm=pdf&rpf=&rpe=  	"~JW: wshRSL MP4 'Worksheet for the ''Warchtower'' Study Articles'" "Study"
+----------gU------------
+https://apps.jw.org/U_RSSMEDIAMAG?rln=U&rmn=g&rfm=mp3 	"~JW: gU  MP3 'Awake!'" "Awake!" tag1
+https://apps.jw.org/RSL_RSSMEDIAMAG?rln=U&rmn=g&rfm=pdf&rpf=&rpe=   "~JW: gU  PDF 'Awake!'" "Awake!"
+https://apps.jw.org/U_RSSMEDIAMAG?rln=U&rmn=g&rfm=epub    "~JW: gU  EPUB 'Awake!'" "Awake!"
+----------wpU------------
+https://apps.jw.org/U_RSSMEDIAMAG?rln=U&rmn=wp&rfm=mp3 	"~JW: wpU MP3 'Watchtower (Public)'" "Public" tag1
+https://apps.jw.org/RSL_RSSMEDIAMAG?rln=U&rmn=wp&rfm=pdf&rpf=&rpe=  "~JW: wpU PDF 'Watchtower (Public)'" "Public"
+https://apps.jw.org/U_RSSMEDIAMAG?rln=U&rmn=wp&rfm=epub   "~JW: wpU EPUB 'Watchtower (Public)'" "Public"
+https://apps.jw.org/RSL_RSSMEDIAMAG?rln=RSL&rmn=wp&rfm=mp4              "~JW: wpRSL MP4 'Watchtower (Public)'" "Public"
+--
+----------wK------------
+--
+https://apps.jw.org/K_RSSMEDIAMAG?rln=K&rmn=g&rfm=mp3 	"~JW: gK  MP3 'Awake!'" "Awake!"
+https://apps.jw.org/E_RSSMEDIAMAG?rln=K&rmn=g&rfm=pdf&rpf=&rpe=   "~JW: gK  PDF 'Awake!'" "Awake!"
+https://apps.jw.org/K_RSSMEDIAMAG?rln=K&rmn=g&rfm=epub    "~JW: gK  EPUB 'Awake!'" "Awake!"
+----------wK------------
+https://apps.jw.org/K_RSSMEDIAMAG?rln=K&rmn=w&rfm=mp3	"~JW: wK  MP3 'Watchtower (Study)'" "Study"
+https://apps.jw.org/E_RSSMEDIAMAG?rln=K&rmn=w&rfm=pdf&rpf=&rpe=   "~JW: wK  PDF 'Watchtower (Study)'" "Study"
+https://apps.jw.org/K_RSSMEDIAMAG?rln=K&rmn=w&rfm=epub    "~JW: wK  EPUB 'Watchtower (Study)'" "Study"
+----------wpK------------
+https://apps.jw.org/K_RSSMEDIAMAG?rln=K&rmn=wp&rfm=mp3 	"~JW: wpK MP3 'Watchtower (Public)'" "Public"
+https://apps.jw.org/E_RSSMEDIAMAG?rln=K&rmn=wp&rfm=pdf&rpf=&rpe=  "~JW: wpK PDF 'Watchtower (Public)'" "Public"
+https://apps.jw.org/K_RSSMEDIAMAG?rln=K&rmn=wp&rfm=epub   "~JW: wpK EPUB 'Watchtower (Public)'" "Public"
+--
+- ------------------------------
+- ----------YOUTUBE------------
+- ------------------------------
+http://lukesmith.xyz/rss.xml
+https://notrelated.libsyn.com/rss
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA "~Luke Smith (YouTube)"
+https://www.archlinux.org/feeds/news/ "tech"
+
+-
+----------MULT------------
+------------------------------
+https://animevost.org/rss.xml https://animerost.org/rss.xml
+https://www.youtube.com/user/vesislavaofficial/featured
+
+- ------------------------------
+- ----------Archlinux-NEWS------------
+- ------------------------------
+- https://www.archlinux.org/feeds/news/ "tech"
+- ----------------------------
+- ------NEWS-Konotop------------
+- ----------------------------
+https://24tv.ua/rss/tag/1792.xml news
+
+#© 2020 GitHub, Inc.

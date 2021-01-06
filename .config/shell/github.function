@@ -17,15 +17,29 @@ while true; do
        	read choi
 	case "$choi" in
         s)
-					rsync -avzur --delete  --exclude "mpv_later/" --include "~/.config/{alacritty,polybar,bspwm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mpv,sxiv,zsh}" $HOME/dev/Arch_dotfiles/.config
-					rsync -avzur --delete  --exclude ".git/" --exclude ".gitignore" --include "~/.local/{bin,src}" $HOME/dev/Arch_dotfiles/.local
+					cp -Ruf $HOME/.config/alacritty $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/bookmenu $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/bspwm $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/lf $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/nvim/[^plugged] $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/ncmpcpp $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/newsboat $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/mpv/[^watch_later] $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/polybar $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/shell $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/sxiv $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/x11 $HOME/dev/Arch_dotfiles/.config
+					cp -Ruf $HOME/.config/zsh $HOME/dev/Arch_dotfiles/.config
+
+					#rsync -av --delete --exclude "watch_later" --exclude "plugged" --include "~/.config/{alacritty,polybar,bspwm,shell,x11,bookmenu,lf,nvim,ncmpcpp,mpv,sxiv,zsh}" $HOME/dev/Arch_dotfiles/.config
+					#rsync -avzur --delete  --exclude ".git/" --exclude ".gitignore" --include "~/.local/{bin,src}" $HOME/dev/Arch_dotfiles/.local
 
 					 git rev-parse HEAD > /dev/null 2>&1 || return
 					 git -c color.status=always status --short
 					 ;;																										## git status
 
         a)
-					git add .
+					git add -A
 					git commit -m "no commentary"
 					git push
 					break

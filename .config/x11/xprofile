@@ -14,6 +14,7 @@ unclutter &		# Remove mouse when idle
 /home/alex/.local/bin/wallpaper & 	# local wallpaper
 #/home/alex/.local/bin/bing-wallpaper &  # download server 'Bing' pictures ( reload file 1m )
 #mopidy &
+xmodmap ~/.Xmodmap
 setxkbmap -layout "us,ru" -option 'grp:ctrl_shift_toggle' &
 notify-send -i /home/alex/.local/share:-/home/alex/.local/share/larbs/larbs.png "Welcome to LARBS" "Press super+F1 for the help menu." # LARBSWELCOME
 

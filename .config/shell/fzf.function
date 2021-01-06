@@ -11,9 +11,29 @@
      }
 
 
+## Установка нужного npm пакета
+fnpm() {
+    local packages
+    packages=$(all-the-package-names | fzf -m) &&
+    echo "$packages" &&
+    npm i $(echo $packages)
+}
+
+
+##  Убить процесс
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
+
 
 ## -- START ----------- OPEN {} FILES
 ff() { cd $HOME ;du -a ~/.local/bin/* | awk '{print $2}' | fzf | xargs -r -I % $EDITOR % && disown ; exit ;}
-#fd() { lf "$(awk '{print $2}' ~/.config/directories | grep -vi memes | fzf | sed "s|~|$HOME|")" ;}
+fd() { lf "$(awk '{print $2}' ~/.config/shell/bm-dirs | grep -vi memes | fzf | sed "s|~|$HOME|")" ;}
 
 ## -- END ----------- OPEN {} FILES
