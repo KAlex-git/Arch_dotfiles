@@ -1,0 +1,1 @@
+/usr/local/share/zsh/site-functions/prompt_spaceship_setup
