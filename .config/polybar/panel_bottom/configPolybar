@@ -66,7 +66,7 @@ spacing = 0
 
 modules-left = lang bspwm title
 modules-center = time
-modules-right = packages mailbox temp volume memory cpu inet
+modules-right = packages torrents mailbox temp volume memory cpu inet
 #}}}----------------------------------BOTTOM
 
 [bar/bottom_external]
@@ -222,6 +222,14 @@ interval = 60
 # click-right =  $TERMINAL -e neomut
 # label-padding = 1
 # #interval = 1
+
+[module/torrents]
+type = custom/script
+exec = echo 📥
+click-left = $TERMINAL -e tremc &
+click-right = notifytorrents
+interval = 0
+
 [module/mailbox]
 type = custom/ipc
 hook-0 = unread="$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/mail/*/[Ii][Nn][Bb][Oo][Xx]/new/* -type f | wc -l 2>/dev/null)"; pidof mbsync >/dev/null 2>&1 && icon="🔃"; [ "$unread" = "0" ] && [ "$icon" = "" ] || echo "📬$unread$icon"
