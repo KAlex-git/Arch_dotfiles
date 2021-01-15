@@ -213,30 +213,27 @@ label-padding = 3
 interval = 60
 #}}}----------------------------------TIME
 #{{{----------------------------------MAILBOX
-# [module/mailbox]
-# type = custom/script
-# exec = sb-mailbox
-# label = "%output%"
-# format-underline = #4a9eff
-# click-left = $TERMINAL -e neomutt
-# click-right =  $TERMINAL -e neomut
-# label-padding = 1
-# #interval = 1
+[module/mailbox]
+type = custom/script
+exec = sb-mailbox 2>/dev/null
+label = "%output%"
+format-underline = #4a9eff
+click-left = $TERMINAL -e neomutt
+click-right =  $TERMINAL -e neomut
+label-padding = 1
 
+#}}}----------------------------------MAILBOX
+#{{{----------------------------------TORRENTS
 [module/torrents]
 type = custom/script
-exec = echo 📥
-click-left = $TERMINAL -e tremc &
+exec = sb-torrent 2>/dev/null
+label = "%output%"
+format-underline = #4a9eff
+click-left = $TERMINAL -e tremc
 click-right = notifytorrents
-interval = 0
+label-padding = 1
 
-[module/mailbox]
-type = custom/ipc
-hook-0 = unread="$(find "${XDG_DATA_HOME:-$HOME/.local/share}"/mail/*/[Ii][Nn][Bb][Oo][Xx]/new/* -type f | wc -l 2>/dev/null)"; pidof mbsync >/dev/null 2>&1 && icon="🔃"; [ "$unread" = "0" ] && [ "$icon" = "" ] || echo "📬$unread$icon"
-format-prefix = " "
-click-left =
-#initial = 1
-#}}}----------------------------------MAILBOX
+#}}}----------------------------------TORRENTS
 #{{{----------------------------------TEMP
 [module/temp]
 type = internal/temperature

@@ -140,6 +140,13 @@ let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips']
 let g:UltiSnipsEditSplit="vertical"
 "let g:UltiSnipsExpandTrigger = ";"
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plug 'Valloric/YouCompleteMe'
+	let g:ycm_server_python_interpreter='python3.9'
+	let g:ycm_autoclose_preview_window_after_completion = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Nerd tree
 map <C-n> :NERDTreeToggle<CR>
@@ -201,6 +208,8 @@ map <C-n> :NERDTreeToggle<CR>
 	autocmd BufWritePost Xresources,Xdefaults,xresources,xdefaults !xrdb %
 	autocmd BufWritePost sxhkdrc silent !pkill -usr1 -x sxhkd && notify-send 'sxhkd' 'Reloaded config'
 	autocmd BufWritePost configPolybar silent !pgrep -u $UID -x polybar  && $(~/.config/polybar/launchpolybar.sh|$SHELL) && notify-send 'pylybar bottom' 'Reloaded config'
+" Recompile ls_extended config edit.
+	autocmd BufWritePost ~/.config/install_system/AUR_PKG/ls_extended/src/icons.c !cd ~/.config/install_system/AUR_PKG/ls_extended/; sh ./build.sh
 
 
 " Recompile dwmblocks on config edit.
@@ -412,6 +421,5 @@ set termguicolors
 colorscheme codedark
 
 
-""""""""""""""""""""""""""""""""""""
 
 echo ">^.^<"

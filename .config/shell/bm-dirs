@@ -8,9 +8,12 @@ dt  ~/.local/share
 ia  ~/.config/install_system/AUR_PKG
 ii  ~/.config/install_system
 is  ~/.config/install_system/SHELL
-mm   ~/Music
-mn  ~/mnt
-mn  ~/mnt
+mm  ~/Music
+m		/mnt/
+mb  /mnt/backup
+mi  /mnt/iso
+mu  /mnt/usb
+mn  /mnt/win10
 vv  ~/.config/nvim
 pp  ~/Pictures
 sc  ~/.local/bin

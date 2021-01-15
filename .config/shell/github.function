@@ -109,3 +109,19 @@ gb() {
   alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'--all"
   alias gll='fzf_git_log'
 #  alias gl2="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
+
+
+####
+gd_open(){
+cd $HOME/GDisk/
+drive open
+}
+
+gd_pull_cloud_sync_local_folder(){
+cd $HOME/GDisk/
+drive pull RSL_Иллюстрации_к_служению/*
+}
+gd_puch_local_folder_sync_Cloud(){
+cd $HOME/GDisk/
+drive push RSL_Иллюстрации_к_служению
+}

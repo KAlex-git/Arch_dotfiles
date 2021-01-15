@@ -26,9 +26,9 @@ xsetroot -cursor_name left_ptr
 # screen (LVDS) if there's nothing else. This is because I assume that if you
 # have an extra screen attached to a laptop, you want to use that.
 
-#mainmonitor="$(bspc query --monitors --names | grep LVDS | head -n 1)"
-#second_monitor="$(bspc query --monitors --names | grep VGA | head -n 1)"
-#
+mainmonitor="$(bspc query --monitors --names | grep LVDS | head -n 1)"
+second_monitor="$(bspc query --monitors --names | grep VGA | head -n 1)"
+
 connected_monitor=$(xrandr --query | grep 'VGA-1' | awk '{print$2}')
 if [[ $connected_monitor == *connected* ]]; then
 	bspc monitor LVDS-1 -d 6 7 8 9 0
@@ -63,14 +63,14 @@ bspc config presel_feedback_color "#746081"
 
 ##############################################################
 # --- workground
-bspc rule -a Zathura                      state=tiled
-bspc rule -a ViberPC         desktop='^6' state=tiled    follow=on
-bspc rule -a Gimp            desktop='^8' state=floating follow=on
-bspc rule -a Inkscape        desktop='^8' state=floating follow=on
+bspc rule -a Zathura											focus=on								state=tiled
+bspc rule -a ViberPC         desktop='^6' focus=on		follow=on		state=tiled
+bspc rule -a Gimp            desktop='^8' focus=on		follow=on		state=tiled
+bspc rule -a Inkscape        desktop='^8' focus=on		follow=on		state=tiled
 bspc rule -a brave           desktop='^2'
-bspc rule -a mpv                          state=tiled
-bspc rule -a wt              desktop='^1'                          focus=on
-bspc rule -a Screenkey                                                        manage=off
+bspc rule -a mpv													focus=on								state=fullscreen
+bspc rule -a wt              desktop='^1' focus=on
+bspc rule -a Screenkey manage=off
 
 
 ##################
@@ -88,16 +88,6 @@ bspc rule -a St:$dropdownname state=floating
 # --- Startup apps
 # Если не запущенно, то запускает ..
 pgrep -x sxhkd > /dev/null || sxhkd &
-
-# Reload polybar, иначе запускает ..
-connected_monitor=$(xrandr --query | grep 'VGA-1' | awk '{print$2}')
-if [[ $connected_monitor == *connected* ]]; then
-	dualscreen
-	killall -q polybar; pgrep -u $UID -x polybar || sh ~/.config/polybar/launchpolybar.sh
-else
-	killall -q polybar; pgrep -u $UID -x polybar || sh ~/.config/polybar/launchpolybar.sh
-	dual_none
-fi
 
 
 # Если не запущенно, то запускает ..

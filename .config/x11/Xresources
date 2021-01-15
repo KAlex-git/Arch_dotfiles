@@ -4,7 +4,8 @@ st:.alpha: 0.9
 
 *.background:   #000000
 !! Set a default font and font size as below:
-*.font: monospace:size=12
+!!*.font: monospace:size=12
+*.font: JetBrains Mono Medium:pixelsize=16
 
 /* name		dark	light */
 /* black	0	8 */

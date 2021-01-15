@@ -34,11 +34,10 @@ alias fontUpdate="sudo fc-cache -f -v"
 #mkd="mkdir -pv" \
 
 # Colorize commands when possible.
-	#ls="ls -hN --color=auto --group-directories-first" \
+	#ll='ls -hlaN --color=auto --group-directories-first'\
 alias \
-	ll='colorls -ra --sf'\
-	ls="colorls --sf " \
-	la="locate "$1"" \
+	ll='ls -la'\
+	ls="ls_ext" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
 	book="abook -C $HOME/.config/abook/abookrc" \
@@ -151,24 +150,10 @@ esac
 cw () { sudo chown -R ${USER}:${GROUP} "$@" && ls -al ${!#} 2> /dev/null; }
 
 
-## ----- $$$$ ----- ##
-cnv()
-{
-	mkdir outputs
-	for f in *.flac; do ffmpeg -i "$f" -c:a libmp3lame "outputs/${f%.flac}.mp3"; done
-}
-
-
-
-gd()
-{
-		yellow="\033[33m"
-		reset="\e[0m" ;
-		cd $HOME/google-drive/ && \
-				echo -e "$yellow connected "$HOME/google-drive/" $reset"
-		sleep 1
-		grive
-		ls -la --color
+## convert in mp3
+cnv(){
+find -maxdepth 1 -name "*.flac" -exec ffmpeg -i {} -acodec libmp3lame -ab 128k {}.mp3 \;
+find -maxdepth 1 -name "*.wav" -exec ffmpeg -i {} -acodec libmp3lame -ab 128k {}.mp3 \;
 }
 
 
@@ -291,15 +276,15 @@ ff() { cd $HOME ;du -a ~/.local/bin/* | awk '{print $2}' | fzf | xargs -r -I % $
 win10(){
 		dir="/mnt/win10/Users/Alex/Desktop"
 		if [[ -d "$dir" ]]; then
-				sudo mount /dev/sda2 $dir
+				sudo mount /dev/sda2 /mnt/win10
 				#sudo chown -R alex:users ${dir}
-				lf  $dir
+				lf /mnt/win10
 		else
-				sudo mkdir $dir
-				sudo mount /dev/sda2 $dir
-				sudo chown -R alex:users ${dir}
-				sudo chmod +x ${dir}
-				lf $dir
+				sudo mkdir /mnt/win10
+				sudo mount /dev/sda2 /mnt/win10
+				sudo chown -R alex:users /mnt/win10
+				#sudo chmod +x ${dir}
+				lf /mnt/win10
 		fi
 		return 0	## возвращает результат работы
    }
@@ -307,22 +292,27 @@ win10(){
 ## make folder and permissions
 ad()
 {
+	GR="$(groups | awk '{print$2}')" ## wheel
 	echo -n 'Name directories: '
 	read
 	mkdir -p $REPLY
 	sudo chmod +x $REPLY >/dev/null 2>&1
-	echo " $REPLY " | xclip -selection clipboard
+	sudo chown -R ${USER}:$GR "$REPLY"
+	echo "Create file with permissions:	\n\t$(ls -ld "$REPLY")"
+	echo " $REPLY " | xclip -selection clipboard ; cd "$REPLY"
 }
 ## create file and permission
 af()
 {
+	GR="$(groups | awk '{print$2}')" ## wheel
 	newfile="$1"
 	echo -n 'Name file: '
 	read
 	touch $REPLY
 	sudo chmod +x $REPLY >/dev/null 2>&1
-	echo "Create file with permissions: $(ls -la "$REPLY")"
-	$EDITOR $REPLY ; echo " $REPLY " | xclip -selection clipboard
+	sudo chown -R ${USER}:$GR "$REPLY"
+	echo "Create file with permissions: \n\t$(ls -la "$REPLY")"
+	echo " $REPLY " | xclip -selection clipboard ; $EDITOR $REPLY
 }
 
 
@@ -467,13 +457,12 @@ tn()
 }
 ## go to ... cd and open
 s() {
-#	if [[  -f "$1" ]]
-#	then
-		eval test-sh "$1" & disown ; exit
-#	else
-#		builtin cd -P "$1" || return; ls
-#	fi
-
+	if [[  -f "$1" ]]
+	then
+		test-sh "$1" & disown ; exit
+	else
+		builtin cd -P "$1" || return; ls
+	fi
 }
 ## `s` or `o`
 o(){ if  cd "$1"; then ls -a; else open "$1" & disown ; exit; fi ;}
@@ -668,21 +657,8 @@ mytoken(){curl -s \
    https://api.pushover.net/1/messages.json
 }
 
-gd_open(){
-cd /home/alex/gdrive/
-drive open
-}
 
-gd_pull_cloud_sync_local_folder(){
-cd /home/alex/gdrive/
-drive pull RSL_Иллюстрации_к_служению/*
-}
-gd_puch_local_folder_sync_Cloud(){
-cd /home/alex/gdrive/
-drive push RSL_Иллюстрации_к_служению
-}
-
-
+si(){ open $HOME/Documents/SKE/si-U_Всё_Писание.pdf ;}
 
 
 run() {

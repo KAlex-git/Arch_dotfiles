@@ -1,0 +1,166 @@
+#---BSPWM Bindings
+# Restart bspwm/Menu
+super + {_,shift + }{BackSpace}
+	{bspc wm -r, sysact}
+
+# Close/Kill Window
+super + {_,shift + }q
+	bspc node -{c,k}
+
+
+#####################
+# set the window state
+super + {t,s,f}
+	bspc node -t {tiled,floating,fullscreen}
+# Make a windoww sticky/non-sticky
+
+# Фокус окна (влево/вправо(h,l); 2й вверх/вниз(j,k))
+# Перемещение окна (влево/вправо(h,l); 2й вверх/вниз(j,k))
+super + {_,shift + }{j,h,l,k}
+	bspc node -{f,s} {west,south,north,east}
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} ^{1-9,10}
+super + {g,semicolon,Prior,Next}
+	bspc desktop {prev,next}.occupied --focus
+super + {Tab,backslash}
+	bspc desktop last --focus
+
+# rotate current node 90 degrees
+super + o
+	bspc node @focused:/ -R 90
+
+# Toggle gaps
+super + shift + d
+	bspc config window_gap {0,15}
+
+
+
+
+#--{{{ FLOATING WINDOWS
+# expand a window by moving one of its side outward
+super + shift + {y,u,i,o}
+	bspc node -z {right -20 0,bottom 0 20,bottom 0 -20,right 20 0}
+# Window resize 'mode'
+super + z : {h,j,k,l}
+	bspc node --resize {left -10 0,bottom 0 10,top 0 -10,right 10 0}
+
+
+# move a floating window
+super + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+#super + {i,o}
+#	bspc node -f {prev,next}.local
+#super + shift + n
+#	bspc node focused -t \~floating ; hover right
+#super + shift + b
+#	bspc node focused -t \~floating ; hover left
+# st -e $(bspc node -t floating; calcurse)
+#--}}} FLOATING WINDOWS
+
+
+
+##################################################################################
+#---System Control---#
+
+# Audio Control
+###{{{ -------- Audio
+# Pause audio
+super + p
+	mpc toggle
+super + shift + p
+	mpc pause; pauseallmpv
+super + {comma,period}
+	mpc {prev,next}
+	# Restart track
+super + shift + less
+	mpc seek 0%
+# Seek foward in song
+super + {_,shift +} bracketright
+	mpc seek +{10,120}
+# Seek backward in song
+super + {_,shift +} bracketleft
+	mpc seek -{10,120}
+# Increase volume
+super + {equal, minus}
+	{pamixer --allow-boost -i 10, pamixer --allow-boost -d 10}
+
+# Decrease volume
+#super {_,shift +} + minus
+#	amixer sset Master {5,15}%-; pkill -RTMIN+10 blocks
+#super + shift + m
+#	amixer sset Master toggle; pkill -RTMIN+10 blocks
+
+# Audiokeys
+XF86AudioMute
+	amixer sset Master toggle
+XF86Audio{Raise,Lower}Volume
+	amixer sset Master 5%{+,-}
+XF86Audio{Next,Prev}
+	mpc {next,prev}
+XF86Audio{Pause,Play,Stop}
+	mpc {pause,play,stop}
+XF86Audio{Rewind,Forward}
+	mpc seek {-,+}10
+XF86AudioRecord
+	dmenurecord
+XF86AudioMedia
+	$TERMINAL -e ncmpcpp
+###}}} --- end audio
+
+XF86Battery
+	"$TERMINAL" -e sb-popupgrade
+KP 0
+	"$TERMINAL" -e sb-popupgrade
+
+# Brightness
+XF86MonBrightnessUp
+	xbacklight -inc 10 && polybar-msg hook backlight 1
+XF86MonBrightnessDown
+	xbacklight -dec 10 && polybar-msg hook backlight 1
+XF86Display
+	xbacklight -set 100 && polybar-msg hook backlight 1
+
+
+XF86Sleep
+	xscreensaver -lock
+
+#---Application Launchers---#
+
+super + {a, r, n, m, e, shift + n}
+  $TERMINAL -e {alsamixer, lf, nvim -c VimwikiIndex, ncmpcpp, neomutt, newsboat}
+
+super + {Return, grave, w, F10}
+	{$TERMINAL, dmenuunicode, \
+	killall -q $BROWSER || $BROWSER,\
+	killall -q jwou_Examining_the_Scriptures_Daily.sh || \
+	jwou_Examining_the_Scriptures_Daily.sh}
+
+# dmenu(dmrun); bookmenu
+super + {d, b, shift+b, c, e}
+  {dmrun -b -p '>>' -m 'dmenumon' -fn 'glisp' -nb '#0b4199' -nf '#b9c0af' -sb '#000' -sf '#afff2f', bookmenu -p "Select a bookmark" -b ~/.config/bookmenu/browser -co $BROWSER, bookmenu -p "Select a bookmark" -b ~/.config/bookmenu/media -co open,bookmenu -p "Select a config" -b ~/.config/bookmenu/configs -co "$TERMINAL -e nvim"}
+
+
+# Recording
+# Take screenshot
+{_,shift + }{Print}
+	{maim pic-full-$(date '+%y%m%d-%H%M-%S').png, maimpick}
+# Keys for screeen; Sortcut;Kill record audio/video; Record audio/video;
+super + {F12, Insert, Delete, Print}
+	{killall -q screenkey || screenkey, showclip, dmenurecord kill, dmenurecord}
+
+# Start torrent daemon/open interface; toggle torrent daemon; sync email, Mount a USB drive or Android device
+super + {F6, F7, F8, F9, shift + F9}
+	{torwrap, td-toggle, mw sync, dmenumount,dmenuumount}
+
+# copy; online translate (alt+e); polybar refresh: paste; ZOOM Confernce
+alt + {c, e, h, p, v, z}
+	{xclip -selection clipboard, desktop-translate >/dev/null 2>&1, apps_man.sh, pgrep -u $UID -x polybar  && $(~/.config/polybar/launchpolybar.sh|$SHELL) && notify-send 'polybar bottom' 'Reloaded config', xclip -out -selection clipboard, killall -q zoom || notify-send -i "~/.local/share/icons/zoom.png" "ZOOM Meeting";zoom}
+
+
+#alt+' open Watchtower
+alt + apostrophe
+	[[ ! -z $(pgrep -xU $UID WTLibrary.exe) ]] &&\
+		killall WTLibrary.exe && wt || wt

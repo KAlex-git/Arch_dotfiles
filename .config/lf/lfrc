@@ -40,6 +40,8 @@ cmd open ${{
 	video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
 	application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
 	application/csv) $TERMINAL -e sc-im $fx ;;
+	application/octet-stream) wine start /ProgIDOpen Wtlib.Favorite $f >/dev/null 2>&1 & ;;
+
         *) for f in $fx; do setsid $OPENER $f >/dev/null 2>&1 & done;;
     esac
 }}
@@ -161,8 +163,7 @@ cmd chmd ${{
 	set -f
 	printf "chmod permissions?[y/N]"
 	read ans
-	[ $ans = "y" ] &&
-	ch $fx
+	[ $ans = "y" ] && ch $fx
 }}
 
 #{{{ TODO rename }}}
@@ -289,9 +290,9 @@ map ud					clear
 map ul					unLink
 map ui					:unselect; invert
 map un 					push :glob-unselect<space>*.
-map uy					clear
+map uu					clear
 map us 					push :glob-select<space>*.
-map uu 					unselect
+map ue 					unselect
 
 
 #map I				  $~/.config/lf/pv.sh $f | less -R
