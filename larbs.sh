@@ -15,7 +15,7 @@ while getopts ":a:r:b:p:h" o; do case "${o}" in
 esac done
 
 [ -z "$dotfilesrepo" ] && dotfilesrepo="https://github.com/KAlex-git/Arch_dotfiles.git"
-[ -z "$progsfile" ] && progsfile="https://raw.githubusercontent.com/LukeSmithxyz/LARBS/master/progs.csv"
+[ -z "$progsfile" ] && progsfile="https://raw.githubusercontent.com/KAlex-git/Arch_dotfiles/main/progs.csv"
 [ -z "$aurhelper" ] && aurhelper="yay"
 [ -z "$repobranch" ] && repobranch="master"
 
@@ -202,6 +202,8 @@ installationloop
 
 dialog --title "LARBS Installation" --infobox "Finally, installing \`libxft-bgra\` to enable color emoji in suckless software without crashes." 5 70
 yes | sudo -u "$name" $aurhelper -S libxft-bgra-git >/dev/null 2>&1
+
+dialog --title "Add install apps" --infobox "sudo sh arch_3.sh" 5 70
 
 # Install the dotfiles in the user's home directory
 putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
