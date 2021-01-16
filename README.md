@@ -1,23 +1,10 @@
----
-mainfont: Arial
-documentclass: extarticle
-fontsize: 14pt
-geometry: margin=1cm
-
-<!-- title: Alexandro -->
-<!-- date: 05.11.20 -->
-tags:
-categories: [i ]
-papersize: a4
----
-
-Base
-
 #Arch_dotfiles#
 
-У меня два оконных менеджера DWM и BSWPM
+Пользуюсь оконным менеджером DWM
 
-Установленные программы:
+В основном программы, которые я использую написанны на Си++
+
+Основыные программы:
 
 | Название программы | Описание                                     |
 | --------           | --------                                     |
