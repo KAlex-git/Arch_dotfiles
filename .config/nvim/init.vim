@@ -38,7 +38,6 @@ Plug 'VebbNix/lf-vim'
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/goyo.vim'
-"Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'jreybert/vimagit'
 Plug 'lukesmithxyz/vimling'
 Plug 'vimwiki/vimwiki'
@@ -50,6 +49,8 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'easymotion/vim-easymotion'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'scrooloose/syntastic'
+Plug 'lilydjwg/colorizer'
 call plug#end()
 
 " Some basics:
@@ -413,6 +414,7 @@ au BufRead,BufNewFile tex.snippets set filetype=tex
 au BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
 au BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
 au BufRead,BufNewFile *.tex set filetype=tex
+""au BufRead,BufNewFile *.text set filetype=text
 
 map <silent> <f2> :call fzf#run({'source': 'rg --files --column --no-heading --hidden --follow --glob "!$HOME/.config/*"', 'sink': 'e', 'down': '~30%', 'options': '--bind ctrl-o:up,ctrl-l:down'})<cr>
 
@@ -423,3 +425,8 @@ colorscheme codedark
 
 
 echo ">^.^<"
+
+"" save position
+set viminfo='1000,f1
+"" special enable theme
+autocmd BufEnter *.txt,tutor.edu	:colorscheme my_colors

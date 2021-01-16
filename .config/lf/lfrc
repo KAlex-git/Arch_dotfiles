@@ -1,4 +1,4 @@
-set previewer ~/.config/lf/preview
+set previewer /home/alex/.config/lf/pv.sh
 
 
 
@@ -27,11 +27,13 @@ set ratios 1:2:3
 set ignorecase true
 set number
 set scrolloff 10
+set timefmt '2006.01.02 15:04:05'
 
 # cmds/functions
 cmd open ${{
     case $(file --mime-type $f -b) in
     	text/troff) man ./ $f;;
+    	text/html) $BROWSER $f;;
         text/*) $EDITOR $fx;;
 	image/x-xcf|image/svg+xml) setsid gimp $f >/dev/null 2>&1 & ;;
 	image/svg+xml) display -- $f ;;
@@ -128,20 +130,17 @@ map unLink :{{
 cmd zip ${{
 	set -f
   if [[ -d $fx ]]; then
-  mkdir $f-zip
-  cp -r $fx $f-zip
-  (cd $f-zip/ && zip -r $f.zip .)
+  cp -r $fx/ $f-zip
+  (cd $f-zip/ ; zip -r $f.zip .)
   rm -rf $f-zip/
+	notify-send "to pack" "$f.zip"
 	fi
 
-	if [[ -f $fx ]]; then
+	if [[ -f $f ]]; then
 		fname=$(basename $f)
 		name=${fname%.*}
-		mkdir $name
-		cp -r $fx $name
-		(cd $name/ && zip -r $name.zip .; mv $name.zip ../)
-		rm -rf $name/
-		notify-send "to pack" "$name"
+    zip -r $name.zip $fx
+		notify-send "to pack" "$name.zip"
 	fi
 }}
 cmd tar %tar cvf "$f.tar" "$f"
@@ -202,11 +201,13 @@ cmd source_preview ${{
 	set -f
 sed -i '1cset previewer ~/.config/lf/preview' /home/alex/.config/lf/lfrc
 notify-send 'source preview'
+(lfrun && killall -q lf)
 }}
 cmd source_pv.sh ${{
 	set -f
  sed -i '1cset previewer /home/alex/.config/lf/pv.sh' /home/alex/.config/lf/lfrc
 notify-send 'source pv.sh'
+(lf && killall -q lfrun)
 }}
 ## cd location
 cmd fzf_jump ${{
@@ -267,7 +268,7 @@ map <c-d>			cut		 # mark of delete or move to...
 # create ...
 map ad				mdir
 map af				touch
-map ai				!gstat $f || stat $f; echo ; du -sh $f ; echo ; file -I -b -p $f
+map ai				!gstat $f || stat $f; echo ; du -sh $f ; echo ; file -b -p $f
 map au				!du -hsx * | sort -rh | less
 map cc				chmd			## chmod
 # rename ...
@@ -279,6 +280,7 @@ map r_ 				r_
 map aa					reload
 map <c-r>				reload
 map <enter>			shell
+map q						!sudo killall -q lf{run} ; exit
 # pack && unpack
 map ax					ext
 map az 					zip
@@ -295,7 +297,6 @@ map us 					push :glob-select<space>*.
 map ue 					unselect
 
 
-#map I				  $~/.config/lf/pv.sh $f | less -R
 map c<c-c>		source_preview
 map c<c-d>		source_pv.sh
 # execute current file (must be executable)
@@ -320,7 +321,7 @@ map fci				$lf -remote "send $id cd ~/.config/install_system"
 map fcc				$lf -remote "send $id cd ~/.config/"
 map fD				$lf -remote "send $id cd ~/Downloads"
 map fh				$lf -remote "send $id cd ~"
-map fls				$lf -remote "send $id cd ~/.local/share"
+map fle				$lf -remote "send $id cd ~/.local/share"
 map flb				$lf -remote "send $id cd ~/.local/bin"
 map fmn				$lf -remote "send $id cd /mnt"
 map fmm				$lf -remote "send $id cd ~/Music"
@@ -328,8 +329,10 @@ map fpp				$lf -remote "send $id cd ~/Pictures"
 map fvv				$lf -remote "send $id cd ~/Videos"
 map ft				$lf -remote "send $id cd ~/tmp"
 map f/				$lf -remote "send $id cd /"
+map fmb				$lf -remote "send $id cd /mnt/backup"
 map fmi				$lf -remote "send $id cd /mnt/iso"
 map fmu				$lf -remote "send $id cd /mnt/usb"
+map fmn				$lf -remote "send $id cd /mnt/win10"
 
 # >> fast dirs end
 

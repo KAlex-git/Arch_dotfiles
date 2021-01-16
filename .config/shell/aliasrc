@@ -36,12 +36,12 @@ alias fontUpdate="sudo fc-cache -f -v"
 # Colorize commands when possible.
 	#ll='ls -hlaN --color=auto --group-directories-first'\
 alias \
-	ll='ls -la'\
+	ll='/usr/bin/ls -hlaN --color=auto --group-directories-first'\
 	ls="ls_ext" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
 	book="abook -C $HOME/.config/abook/abookrc" \
-	--='cd -; ls'	# переход в предыдущий каталог посещения
+	-='cd -; ls' \	# переход в предыдущий каталог посещения
 
 # These common commands are just too long! Abbreviate them.
 alias \
@@ -60,7 +60,8 @@ alias \
 	xq="xbps-query" \
 	z="zathura" \
 	q='exit' \
-    dt="cd /home/alex/Documents/TEX ; ls -l"
+  dt="cd /home/alex/Documents/TEX ; ls -l" \
+
     per(){ $EDITOR /home/alex/Documents/TEX/charaсter/charter.tex ;}
 alias \
 	magit="nvim -c MagitOnly" \
@@ -668,3 +669,26 @@ run() {
   fi
 }
 sev(){xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }' ;}
+
+
+ytta() {
+	echo "[ Download & convert to mp3 from textfile ]"
+	youtube-dl -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 \
+	--metadata-from-title  "(?P<artist>.+?) - (?P<title>.+)"  \
+	--embed-thumbnail --add-metadata -o "~/Documents/Music/%(title)s.%(ext)s" \
+	--batch-file "/home/jsn/Downloads/yt.txt" "${@}" &&
+		trash-put ~/Downloads/yt.txt
+	}
+
+## Pipe Aliases (Global)
+alias -g L='|less'
+alias -g G='|grep'
+alias -g T='|tail'
+alias -g H='|head'
+alias -g W='|wc -l'
+alias -g S='|sort'
+alias -g LL="2>&1 | less"
+alias -g CA="2>&1 | cat -A"
+alias -g NE="2> /dev/null"
+alias lastl='last | head -5 | tr -s " "' # Last log-ins
+alias -g NUL="> /dev/null 2>&1"alias hgrep="fc -El 0 | grep"
