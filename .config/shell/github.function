@@ -6,7 +6,7 @@ gs(){
 ## MENU
 dwmblocks(){
 	[[ -d "$HOME/dev/Arch_dotfiles/.local/dwmblocks" ]] || mkdir "$HOME/dev/Arch_dotfiles/.local/dwmblocks"
-	rsync -avzur --delete "$HOME/.local/src/dwmblocks/{patches,config.h,dwmblocks,dwmblocks.c,dwmblocks.o,FUNDING.yml,LICENSE,Makefile,README.md}" "$HOME/dev/Arch_dotfiles/.local"
+	rsync -avzur --delete "$HOME/.local/src/dwmblocks/{patches,config.h,dwmblocks,dwmblocks.c,dwmblocks.o,LICENSE,Makefile,README.md}" "$HOME/dev/Arch_dotfiles/.local"
 }
 
 	 cd $HOME/dev/Arch_dotfiles/
