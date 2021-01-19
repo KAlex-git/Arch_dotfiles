@@ -48,6 +48,7 @@ while true; do
 					rsync -avzur --delete "$HOME/.local/src/st" $HOME/dev/Arch_dotfiles/.local
 					rsync -avzur --delete "$HOME/.local/src/dwm" $HOME/dev/Arch_dotfiles/.local
 					rsync -avzur --delete "$HOME/.local/src/dmenu" $HOME/dev/Arch_dotfiles/.local
+					dwmblocks
 
 					 git rev-parse HEAD > /dev/null 2>&1 || return
 					 git -c color.status=always status --short
