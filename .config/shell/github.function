@@ -40,10 +40,14 @@ while true; do
 					rsync -avzur --delete "$HOME/.config/zsh" "$HOME/dev/Arch_dotfiles/.config"
 
 					rsync -avzur --delete "$HOME/.local/bin" $HOME/dev/Arch_dotfiles/.local
-					rsync -avzur --delete "$HOME/.local/src/st" $HOME/dev/Arch_dotfiles/.local/src
-					rsync -avzur --delete "$HOME/.local/src/dwm" $HOME/dev/Arch_dotfiles/.local/src
-					rsync -avzur --delete "$HOME/.local/src/dmenu" $HOME/dev/Arch_dotfiles/.local/src
-					rmdir $HOME/.local/src/dwmblocks ; cp -R "$HOME/.local/src/dwmblocks" "$HOME/dev/Arch_dotfiles/.local/src"
+					(cd $HOME/.local/src/ ; tar zcvf st.tgz st)
+					(cd $HOME/.local/src/ ; tar zcvf dwm.tgz dwm)
+					(cd $HOME/.local/src/ ; tar zcvf dmenu.tgz dmenu)
+					(cd $HOME/.local/src/ ; tar zcvf dwmblocks.tgz dwmblocks)
+					rsync -avzur --delete "$HOME/.local/src/st.tgz" $HOME/dev/Arch_dotfiles/.local/src
+					rsync -avzur --delete "$HOME/.local/src/dwm.tgz" $HOME/dev/Arch_dotfiles/.local/src
+					rsync -avzur --delete "$HOME/.local/src/dmenu.tgz" $HOME/dev/Arch_dotfiles/.local/src
+					rsync -avzur --delete "$HOME/.local/src/dwmblocks.tgz" "$HOME/dev/Arch_dotfiles/.local/src"
 
 					 git rev-parse HEAD > /dev/null 2>&1 || return
 					 git -c color.status=always status --short
