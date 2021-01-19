@@ -18,7 +18,6 @@ esac done
 [ -z "$progsfile" ] && progsfile="https://raw.githubusercontent.com/KAlex-git/Arch_dotfiles/main/progs.csv"
 [ -z "$aurhelper" ] && aurhelper="yay"
 [ -z "$repobranch" ] && repobranch="master"
-
 ### FUNCTIONS ###
 
 installpkg(){ pacman --noconfirm --needed -S "$1" >/dev/null 2>&1 ;}
@@ -98,6 +97,18 @@ gitmakeinstall() {
 	make >/dev/null 2>&1
 	make install >/dev/null 2>&1
 	cd /tmp || return ;}
+###################################################################################################################
+makeSYSinstall() {
+	progname="$(basename "$1")"
+	dir="$repodir/$progname"
+	dialog --title "LARBS Installation" --infobox "Installing \`$progname\` ($n of $total) via \`git\` and \`make\`. $(basename "$1") $2" 5 70
+	wget https://raw.githubusercontent.com/KAlex-git/Arch_dotfiles/main/.local/src/"$progname".tgz
+	sudo -u "$name" tar xvf "$progname".tgz -C "$dir"
+	cd "$dir" || exit
+	make >/dev/null 2>&1
+	make install >/dev/null 2>&1
+	cd /tmp || return ;}
+###################################################################################################################
 
 aurinstall() { \
 	dialog --title "LARBS Installation" --infobox "Installing \`$1\` ($n of $total) from the AUR. $1 $2" 5 70
@@ -121,6 +132,7 @@ installationloop() { \
 		case "$tag" in
 			"A") aurinstall "$program" "$comment" ;;
 			"G") gitmakeinstall "$program" "$comment" ;;
+			"M") makeSYSinstall "$program" "$comment" ;;
 			"P") pipinstall "$program" "$comment" ;;
 			*) maininstall "$program" "$comment" ;;
 		esac
