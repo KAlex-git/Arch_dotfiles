@@ -2,7 +2,7 @@
 # Feed this script a link and it will give dmenu
 # some choice programs to use to open it.
 
-re="/home/alex/.config/install_system/radio/RadioRelax.m3u"
+re="/home/alex/.config/install_system/M3U/RadioRelax.m3u"
 cl="http://minnesota.publicradio.org/tools/play/streams/classical.pls"
 ne="http://minnesota.publicradio.org/tools/play/streams/news.pls" # MPR News
 cu="http://minnesota.publicradio.org/tools/play/streams/the_current.pls" # The Current

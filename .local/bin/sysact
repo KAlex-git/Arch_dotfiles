@@ -8,22 +8,13 @@ case "$(readlink -f /sbin/init)" in
 	*openrc*) reb="sudo -A openrc-shutdown -r"; shut="sudo -A openrc-shutdown -p" ;;
 esac
 
-WM=`wmctrl -m | grep Name| awk '{print $2}'`
-wm(){ echo "$WM" ;}
-ice(){
-	if [[ "wm" == bspwm ]]; then
-			bspc quit
-		else
-		kill -TERM $(pgrep -u $USER "\bdwm$")
-	fi
-}
 cmds="\
-🔒 lock			slock
-🚪 leave dwm/bspwm		ice
-♻ renew dwm		kill -HUP $(pgrep -u $USER "\bdwm$")
-🐻 hibernate		slock ${hib:-systemctl suspend-then-hibernate -i}
-🔃 reboot		${reb:-sudo -A reboot}
-🖥 shutdown		${shut:-sudo -A shutdown -h now}"
+🔒 lock		slock
+🚪 leave dwm	kill -TERM $(pgrep -u $USER "\bdwm$")
+♻ renew dwm	kill -HUP $(pgrep -u $USER "\bdwm$")
+🐻 hibernate	slock ${hib:-systemctl suspend-then-hibernate -i}
+🔃 reboot	${reb:-sudo -A reboot}
+🖥 shutdown	${shut:-sudo -A shutdown -h now}"
 
 choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu)" || exit 1
 

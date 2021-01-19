@@ -74,12 +74,10 @@ case "$1" in
 	    if [[ "$1" == *.exe ]]; then
         	wine "$@" 2>&1 & disown ;exit
 	    fi;;
-	*.csv)
-        	#sc-im "$1" 2>&1 & disown ;exit
-		scv "$1" >/dev/null 2>&1 & ;;
+	*.csv) "$TERMINAL" -e sc-im "$1" >/dev/null 2>&1 & ;;
 	*.sh)
 			    if [[ "$1" == *.sh ]]; then
-				/usr/bin/sh "$@" >/dev/null 2>&1 &
+				/usr/bin/sh "$1" >/dev/null 2>&1 &
 					fi;;
 	*)
 		if [[ -f "$1" ]]; then

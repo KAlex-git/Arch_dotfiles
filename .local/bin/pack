@@ -1,6 +1,6 @@
 #!/usr//bin/sh
 ##
-#source $HOME/.local/bin/shellColor.sh
+source $HOME/.local/bin/shellColor.sh
 ##
 ##
 ##
@@ -16,13 +16,22 @@
 #{{{ ----- Variable
 day="$(date '+%Y%m%d_%a_%H:%M:%S').tgz"		# add file name (date.tgz)
 dest="/mnt/backup" 				# Where to backup to.
+AUR="$HOME/.config/install_system/AUR_PKG"
 f="$PWD/$1"
 fname=`basename ${1:-.}`
 
+[[ -d $dest ]] || sudo mkdir -p /mnt/backup
+		sudo chown -R ${USER}:${GROUP} "$dest"
+    sudo chmod -R 755 "$dest"
 #{{{ ----- backup tar # https://ubuntu.com/server/docs/backups-shell-scripts
 atar(){
 # Create tar arhive
 	ptf="$dest/$fname"
+	tar czfP "$ptf"_"$day" "$f"
+}
+ciA(){
+# Create tar arhive
+	ptf="$AUR/$fname"
 	tar czfP "$ptf"_"$day" "$f"
 }
 #}}} ----- backup tar
@@ -43,6 +52,11 @@ atar(){
 			e_warning "$dest";
 			e_success "done" ||\
 			e_error "viewer in /mnt/backup"
+
+			 ciA &&\
+			e_warning "$AUR";
+			e_success "done" ||\
+			e_error "viewer in ..AUR_PKG"
 						;;
 		r)local f="$PWD/$1"					# full path to file (for rsync)
 			rsync -azvh --progress "${f}" $dest &&\

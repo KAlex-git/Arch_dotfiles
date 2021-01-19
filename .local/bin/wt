@@ -17,6 +17,6 @@ ist(){
 [[ ! -z $(pgrep -xU $UID WTLibrary.exe) ]] && killall WTLibrary.exe
 
 wi="$(\
-notify-send  -i "$HOME/.local/share/icons/WT.png" "WatchtowerLibrary"
+notify-send  -i "$HOME/.local/share/icons/wtl.png" "wt"
 wine "$HOME/.local/share/wineprefixes/default/drive_c/Program Files/Watchtower/Watchtower Library/U/WTLibrary.exe" 2>/dev/null $ disown ; exit \
 	)"

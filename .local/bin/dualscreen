@@ -13,15 +13,14 @@ WM="$(ps -A | egrep -i "bspwm|dwm" | head -1 | awk '{print $4}')"
 
 
 
-if [[ "$WM" == dwm ]]; then
+if [[ "$WM" == "dwm" ]]; then
 	$2scr
 	notify-send 'dwm'
 else
 	$2scr
+	notify-send 'bspwm'
 
 	pgrep -u $UID -x polybar && killall -q polybar
 	$HOME/.config/polybar/launchpolybar.sh | $SHELL & disown ;exit
-
-	notify-send 'bspwm'
 
 fi

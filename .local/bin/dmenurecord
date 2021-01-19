@@ -33,13 +33,14 @@ screencast() { \
 	-framerate 60 \
 	-s "$(xdpyinfo | grep dimensions | awk '{print $2;}')" \
 	-i "$DISPLAY" \
-	-f alsa -i default \
+	-f pulse -ac 2 -i default \
 	-r 30 \
  	-c:v h264 -crf 0 -preset ultrafast -c:a aac \
 	"$HOME/screencast-$(date '+%y%m%d-%H%M-%S').mp4" &
 	echo $! > /tmp/recordingpid
 	updateicon "⏺️🎙️"
        	}
+##ffmpeg -framerate 60 -video_size 1366x768 -f x11grab -i :0.0 -f pulse -ac 2 -i 1 -vcodec libx264 -crf 0 -preset ultrafast -acodec pcm_s16le output.mkv
 
 video() { ffmpeg \
 	-f x11grab \
@@ -79,7 +80,7 @@ audio() { \
 	updateicon "🎙️"
 	}
 
-askrecording() { \
+askrecording() { dual_none ; \
 	choice=$(printf "screencast\\nvideo\\nvideo selected\\naudio\\nwebcam\\nwebcam (hi-def)" | dmenu -i -p "Select recording style:")
 	case "$choice" in
 		screencast) screencast;;
@@ -114,10 +115,10 @@ videoselected()
 }
 
 case "$1" in
-	screencast) screencast;;
+	screencast)screencast;;
 	audio) audio;;
 	video) video;;
 	*selected) videoselected;;
 	kill) killrecording;;
-	*) ([ -f /tmp/recordingpid ] && asktoend && exit) || askrecording;;
+	*) ([ -f /tmp/recordingpid ] && asktoend ; exit) || askrecording ;;
 esac
