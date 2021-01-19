@@ -163,6 +163,12 @@ cmd chmd ${{
 	printf "chmod permissions?[y/N]"
 	read ans
 	[ $ans = "y" ] && ch $fx
+	lf -remote 'send reload'
+}}
+cmd chwn ${{
+	set -f
+	cw $fx
+	lf -remote 'send reload'
 }}
 
 #{{{ TODO rename }}}
@@ -271,6 +277,7 @@ map af				touch
 map ai				!gstat $f || stat $f; echo ; du -sh $f ; echo ; file -b -p $f
 map au				!du -hsx * | sort -rh | less
 map cc				chmd			## chmod
+map cw				chwn			## chown
 # rename ...
 map ea 				open_config
 map ee				$$EDITOR $f
@@ -299,6 +306,10 @@ map ue 					unselect
 
 map c<c-c>		source_preview
 map c<c-d>		source_pv.sh
+map oc				!inkscape "$f"
+map og 				!gimp "$f"
+map -					$lf -remote "send $id $(cd -)"
+
 # execute current file (must be executable)
 #map o &mimeopen "$f"
 #map O $mimeopen --ask "$f"
@@ -310,8 +321,6 @@ map gF						$gFFolderINCloud.sh
 map gC						$gCCloud_in_folder.sh
 
 
-map oc !inkscape "$f"
-map og !gimp "$f"
 
 #* FAST DIRS
 # >> fast dirs start

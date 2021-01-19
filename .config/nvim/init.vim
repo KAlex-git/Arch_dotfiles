@@ -1,3 +1,4 @@
+echo ">^.^<"
 set nobackup       "no backup files
 set nowritebackup  "only in case you don't want a backup file while editing
 set noswapfile     "no swap files
@@ -414,19 +415,41 @@ au BufRead,BufNewFile tex.snippets set filetype=tex
 au BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
 au BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
 au BufRead,BufNewFile *.tex set filetype=tex
-""au BufRead,BufNewFile *.text set filetype=text
-
-map <silent> <f2> :call fzf#run({'source': 'rg --files --column --no-heading --hidden --follow --glob "!$HOME/.config/*"', 'sink': 'e', 'down': '~30%', 'options': '--bind ctrl-o:up,ctrl-l:down'})<cr>
+au BufRead,BufNewFile tutor.edu,*.txt colorscheme my_colors
+au BufRead,BufNewFile rss_example colorscheme my_colors
+au BufRead,BufNewFile rss_example set foldmethod=manual
 
 Plug 'tomasiser/vim-code-dark'
 set termguicolors
 colorscheme codedark
 
-
-
-echo ">^.^<"
-
 "" save position
 set viminfo='1000,f1
-"" special enable theme
-autocmd BufEnter *.txt,tutor.edu	:colorscheme my_colors
+
+
+
+"=============НАСТРОЙКИ СВОРАЧИВАНИЯ БЛОКОВ КОДА (фолдинг)=============
+" == Сворачивание ==
+" zc                        свернуть блок
+" zo                        развернуть блок
+" zM                        закрыть все блоки
+" zR                        открыть все блоки
+" za                        инвертирование
+" zf                        см :set foldmethod=manual
+" :set foldenable           включить свoрачивание
+" :set foldmethod=syntax    сворачивание на основе синтаксиса
+" :set foldmethod=indent    сворачивание на основе отступов
+" :set foldmethod=manual    выделяем участок с помощью v и говорим zf#j
+		"v/V и zf - выделение блока и создание свертки
+		"После закрытия vim все свертки забываться, для сохранения сверток в открытом файле используется команда :mkview, для загрузки - loadview
+" :set foldmethod=marker    сворачивание на основе маркеров в тексте
+" :set foldmarker=bigin,end задаем маркеры начала и конца блока
+
+set foldenable									" отклключить фолдинг по умолчанию
+set foldmethod=indent						"
+set foldlevel=1									" Первый уровень вложенности открыт, остальные закрыты
+"set foldopen=all								" автоматическое открытие сверток при заходе в них
+
+"Для того чтобы vim помнил fold-ы снова при открытии файла нужно добависть в вам файл конфига vimrc следующие строки
+autocmd BufWinLeave *.rss mkview
+autocmd BufWinEnter *.rss silent loadview

@@ -277,14 +277,17 @@ ff() { cd $HOME ;du -a ~/.local/bin/* | awk '{print $2}' | fzf | xargs -r -I % $
 win10(){
 		dir="/mnt/win10/Users/Alex/Desktop"
 		if [[ -d "$dir" ]]; then
-				sudo mount /dev/sda2 /mnt/win10
-				#sudo chown -R alex:users ${dir}
+						GR="$(groups | awk '{print$2}')" ## wheel
+				sudo mount -o rw,users,umask=000,exec /dev/sda2 /mnt/win10  ## full access
+				sudo chmod +x ${dir}
+				sudo chown -R ${USER}:$GR ${dir}
 				lf /mnt/win10
 		else
+						GR="$(groups | awk '{print$2}')" ## wheel
 				sudo mkdir /mnt/win10
-				sudo mount /dev/sda2 /mnt/win10
-				sudo chown -R alex:users /mnt/win10
-				#sudo chmod +x ${dir}
+				sudo mount -o rw,users,umask=000,exec /dev/sda2 /mnt/win10  ## full access
+				sudo chmod +x ${dir}
+				sudo chown -R ${USER}:$GR	${dir}
 				lf /mnt/win10
 		fi
 		return 0	## возвращает результат работы
@@ -681,6 +684,7 @@ ytta() {
 	}
 
 ## Pipe Aliases (Global)
+alias gr="grep --color -E '$1' '$2'"
 alias -g L='|less'
 alias -g G='|grep'
 alias -g T='|tail'
