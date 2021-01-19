@@ -4,11 +4,6 @@
 ## git status, add, commit, push
 gs(){
 ## MENU
-dwmblocks(){
-	[[ -d "$HOME/dev/Arch_dotfiles/.local/dwmblocks" ]] || mkdir "$HOME/dev/Arch_dotfiles/.local/dwmblocks"
-	rsync -avzur --delete "$HOME/.local/src/dwmblocks/{patches,config.h,dwmblocks,dwmblocks.c,dwmblocks.o,LICENSE,Makefile,README.md}" "$HOME/dev/Arch_dotfiles/.local"
-}
-
 	 cd $HOME/dev/Arch_dotfiles/
 	 echo "$(ls -a)"
 while true; do
@@ -48,7 +43,7 @@ while true; do
 					rsync -avzur --delete "$HOME/.local/src/st" $HOME/dev/Arch_dotfiles/.local
 					rsync -avzur --delete "$HOME/.local/src/dwm" $HOME/dev/Arch_dotfiles/.local
 					rsync -avzur --delete "$HOME/.local/src/dmenu" $HOME/dev/Arch_dotfiles/.local
-					dwmblocks
+					rsync -avzur --delete --exclude='/*/.local' "$HOME/.local/src/dwmblocks" "$HOME/dev/Arch_dotfiles/.local"
 
 					 git rev-parse HEAD > /dev/null 2>&1 || return
 					 git -c color.status=always status --short
