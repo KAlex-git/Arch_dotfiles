@@ -1,22 +1,51 @@
 #!/bin/sh
+menu(){ dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -l 22 -p "..." ;}
 
- file="$HOME/.local/share/larbs/getkeys/"
+file="$HOME/.local/share/larbs/getkeys"
 
- case "$( ls $file | dmenu -i -l 200 -fn Monospace-9 -p "key programm" )" in
-	 "Что_означает_dev_null.pdf" )
-	 			$READER	     "$file/Что_означает_dev_null.pdf" ;;
- 	"grep") 		$TERMINAL -e $EDITOR "$file/grep" ;;
- 	"calcurse") 		$TERMINAL -e $EDITOR "$file/calcurse" ;;
- 	"i3")                   $TERMINAL -e $EDITOR "$file/i3" ;;
- 	"Как_и_что_использовать_в_логических_операциях_в_sh.pdf")                  			   $READER      "$file/Как_и_что_использовать_в_логических_операциях_в_sh.pdf" ;;
- 	"ncmpcpp")  		$TERMINAL -e $EDITOR "$file/ncmpcpp";;
- 	"ncmpcpp_cheat_sheet.pdf")  		$READER "$file/ncmpcpp_cheat_sheet.pdf";;
-	"lf_GoDoc.pdf")		$READER	     "$file/lf_GoDoc.pdf" ;;
-	"MIME-типы_и_расширения_файлов.pdf")
-				$READER	     "$file/MIME-типы_и_расширения_файлов.pdf" ;;
- 	"mutt") 		$TERMINAL -e $EDITOR "$file/mutt" ;;
- 	"sxiv") 		$TERMINAL -e $EDITOR "$file/sxiv";;
- 	"zathura")		$TERMINAL -e $EDITOR "$file/zathura";;
+
+ declare -a options=(\
+#dev_null
+grep
+calcurse
+логическиe_операции_в_sh
+ncmpcpp
+lf
+MIME-типы
+mutt
+sxiv
+zathura
+qutebrowser
+)
+
+choice=$(echo "$(printf '%s\n' "${options[@]}")" | "menu")
+case "$choice" in
+	"dev_null" )
+		 $READER "$file/Что_означает_dev_null.pdf"
+		 ;;
+	 "grep")
+		 $TERMINAL -e $EDITOR "$file/grep"
+		 ;;
+ 	"calcurse")
+		$TERMINAL -e $EDITOR "$file/calcurse"
+		;;
+ 	"логическиe_операции_в_sh")
+		$READER "$file/Как_и_что_использовать_в_логических_операциях_в_sh.pdf"
+		;;
+ 	"ncmpcpp")
+		find $file -name "ncmpcpp*"			| menu | xargs -n 1 -I {} open "{}"
+		;;
+	"lf")
+		$READER "$file/lf_GoDoc.pdf"
+		;;
+	"MIME-типы")
+		$READER "$file/MIME-типы_и_расширения_файлов.pdf"
+		;;
+ 	"mutt")						$TERMINAL -e $EDITOR "$file/mutt" ;;
+ 	"sxiv")						$TERMINAL -e $EDITOR "$file/sxiv";;
+ 	"zathura")				$TERMINAL -e $EDITOR "$file/zathura";;
  	"qutebrowser")		$TERMINAL -e $EDITOR "$file/qutebrowser";;
-
- esac
+	*)
+		exit 1
+	;;
+esac

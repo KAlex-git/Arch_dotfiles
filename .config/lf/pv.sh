@@ -44,6 +44,7 @@ handle_extension() {
             # Avoid password prompt by providing empty password
             7z l -p -- "${FILE_PATH}"
             exit 1;;
+				*.iso) iso-info --no-header -l "$1";;
 
         # PDF
         pdf)
@@ -63,6 +64,8 @@ handle_extension() {
             # Preview as text conversion
             odt2txt "${FILE_PATH}"
             exit 1;;
+				*.doc) catdoc "${FILE_PATH}" ;;
+				*.docx) docx2txt "${FILE_PATH}" - ;;
 
         # HTML
         htm|html|xhtml)
@@ -104,13 +107,12 @@ handle_mime() {
         image/*)
             # Preview as text conversion
             # img2txt --gamma=0.6 -- "${FILE_PATH}" && exit 1
-            exiftool "${FILE_PATH}"
+            mediainfo "${FILE_PATH}"
             exit 1;;
 
         # Video and audio
         video/* | audio/*|application/octet-stream)
             mediainfo "${FILE_PATH}"
-            exiftool "${FILE_PATH}"
             exit 1;;
     esac
 }

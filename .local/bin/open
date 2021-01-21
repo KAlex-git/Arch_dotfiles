@@ -57,7 +57,7 @@ case "$1" in
 	*.m3u)
 		mpv "$1" ;;
    	*mp4|*mkv|*avi|*mpg|*webm|*m4v|*ogv)
-		setsid -f mpv --really-quiet "$@" & disown; exit ;;
+		setsid mpv --really-quiet "$@" & disown; exit ;;
 	*.md)
 		"$TERMINAL" -e "$EDITOR" "$1" >/dev/null 2>&1 & ;;
 	*doc|*docx)
@@ -67,7 +67,7 @@ case "$1" in
 		notify-send  -i "/home/alex/.local/share/icons/libreoffice.png" "Edit of text"
 		setsid libreoffice "$@" & disown; exit  ;;
 	*.torrent)
-		setsid transadd "$@" & disown; exit  ;;
+		setsid -f transadd "$@" & disown; exit  ;;
 	*.wtfav)
 		wine start /ProgIDOpen Wtlib.Favorite "$@" & disown; exit  ;;
 	*.exe)

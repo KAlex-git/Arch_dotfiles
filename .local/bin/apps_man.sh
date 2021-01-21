@@ -1,15 +1,33 @@
 #!/usr/bin/env bash
 ##
 ##
-folder="$HOME/.config/install_system/"
+folder="$HOME/.config/install_system"
 2menu(){ dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -l 22 -p "choice" ;}
 
 awk(){
 local AWK
-AWK="$HOME/.config/install_system/awk/AWK_Essential_Training"
-case "$(printf "awk >>\\n01.Introduction/ >>\\n02.What Is AWK/ >>\\n03.AWK Command Line Basics/ >>\\n04.Understanding Records and Fields/ >>\\n05.Understanding Variables and Operators/ >>\\n06.A Quick Introduction to Regular Expressions/ >>\\n07.Using Control Structures/ >>\\n08.Formatting the Output/ >>\\n09.Functions and Arrays/ >>\\n10.Combining AWK with Other Tools/ >>\\n11.Conclusion/ >>\\nExercice Files/ >>" | dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -l 22 -p "choice viewer: ")"  in
-    "awk >>")
-	    ls $folder/awk/*.{pdf,docx}																				| 2menu | xargs -I {} open "{}" ;;
+AWK="$HOME/.config/install_system/SHELL/awk/AWK_Essential_Training"
+
+declare -a options=(\
+"awk *.{pdf,docx}"
+"01.Insroduction/ >>"
+"02.What Is AWK/ >>"
+"03.AWK Command Line Basics/ >>"
+"04.Understanding Records and Fields/ >>"
+"05.Understanding Variables and Operators/ >>"
+"06.A Quick Introduction to Regular Expressions/ >>"
+"07.Using Control Structures/ >>"
+"08.Formatting the Output/ >>"
+"09.Functions and Arrays/ >>"
+"10.Combining AWK with Other Tools/ >>"
+"11.Conclusion/ >>"
+"Exercice Files/ >>"
+)
+
+choice=$(echo "$(printf '%s\n' "${options[@]}")" | "2menu" 'Open file: ')
+case "$choice" in
+    "awk *.{pdf,docx}")
+	    ls $folder/SHELL/awk/*.{pdf,docx}																				| 2menu | xargs -I {} open "{}" ;;
     "01.Introduction/ >>")
 	    ls $AWK/01.\ Introduction/*																				| 2menu | xargs -I {} open "{}" ;;
     "02.What Is AWK/ >>")
@@ -33,31 +51,44 @@ case "$(printf "awk >>\\n01.Introduction/ >>\\n02.What Is AWK/ >>\\n03.AWK Comma
     "11.Conclusion/ >>")
 	    ls $AWK/11.\ Conclusion/*																					| 2menu | xargs -I {} open "{}" ;;
     "Exercice Files/ >>")
-	    ls $AWK/Exercice\ Files/*																					| 2menu | xargs -I {} open "{}" ;;
+			$TERMINAL -e lf $AWK/Exercice\ Files/
+			;;
 esac
 }
 
+#########################################################################################################
 xar(){
-case "$(printf "xargs" | dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -l 22 -p "choice viewer: ")"  in
+case "$(printf "xargs" | 2menu)"  in
     "xargs")
 	    ls $folder/SHELL/xargs/*.{pdf,docx}						| 2menu | xargs -n 1 -I {} open "{}" ;;
 esac
 }
 
+#########################################################################################################
 menu() { \
-choice=$(printf "nawk\\nxargs\\nbash ->\\ninkscape ->\\nlatex ->\\nOther ->\\nvim ->\\nncmpcpp" | dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -l 22 -p "choice viewer: ")
+declare -a options=(\
+	"Other ->"
+	"awk >>"
+	"xargs"
+	"bash ->"
+	"inkscape ->"
+	"latex ->"
+	"vim ->"
+)
+
+choice=$(echo "$(printf '%s\n' "${options[@]}")" | "2menu" 'Open file: ')
 case "$choice" in
-	"Other ->") getkeys-dmenu;;
-	awk) awk;;
-	xargs) xar;;
+	"awk >>") awk;;
 	"bash ->") 	ls $folder/SHELL/* | grep "bash*"													| 2menu | xargs -I {} open "{}" ;;
 	"inkscape ->")	ls $folder/inkscape/*																	| 2menu | xargs -I {} open "{}" ;;
 	"latex ->")	ls $folder/latex/*																				| 2menu | xargs -I {} open "{}" ;;
+	"Other ->") getkeys-dmenu;;
+	"xargs") xar;;
 	"vim ->") 	ls $folder/vim/Documention/*															| 2menu | xargs -I {} open "{}"  ;;
 esac
 }
 
-
+#########################################################################################################
 case "$1" in
 	*) menu;;
 esac

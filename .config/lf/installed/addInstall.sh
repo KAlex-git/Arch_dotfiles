@@ -1,6 +1,10 @@
-pack="mediainfo odt2txt highlight atool odt2txt w3m pdftotext"
-
-[[ ! -z "/usr/bin/$pack" ]] || yay -S $pack
+#!/bin/sh
+##
+source $HOME/.local/bin/shellColor.sh
+##
+##
+pack="mediainfo odt2txt highlight atool odt2txt w3m pdftotext catdoc docx2txt"
+pacman -Qq $pack || yay -S $pack
 
 pathfull="$(realpath "$0" | sed 's|\(.*\)/.*|\1|')"
 

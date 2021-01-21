@@ -6,9 +6,9 @@ path="$1"            # Full path of the selected file
 mimetype=$(file --mime-type -Lb "$path")
 
 	case "$mimetype" in
-			text/troff) man ./ $1;;
-			image/x-xcf|image/svg+xml) setsid gimp $1 >/dev/null 2>&1 & ;;
-			image/svg+xml) display -- $1 ;;
+			text/troff) man ./ "$1";;
+			image/x-xcf|image/svg+xml) setsid gimp "$1" >/dev/null 2>&1 & ;;
+			image/svg+xml) display -- "$1" ;;
 			image/*) sxiv "$1" 2>/dev/null ;;
 			audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) "$1" ;;
 			video/*) mpv --really-quiet "$@" >/dev/null 2>&1 & disown; exit 1;;
