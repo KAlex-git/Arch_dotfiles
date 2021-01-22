@@ -4,7 +4,7 @@
 
 В основном программы, которые я использую написанны на Си++
 
-Основыные программы:
+Основные программы:
 
 | Название программы | Описание                                     |
 | --------           | --------                                     |
@@ -21,5 +21,5 @@
 ## zsh
  ![zsh-gihub](https://github.com/KAlex-git/Arch_dotfiles/raw/main/.config/zsh/zsh-git.png)
 
-## sxiv
- ![sxiv](./images/npcpcpp.gif)
+## ncmpcpp
+ ![ncmpcpp](./images/npcpcpp.gif)
