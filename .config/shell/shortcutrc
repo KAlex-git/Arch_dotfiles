@@ -42,3 +42,4 @@ cff="$EDITOR /home/alex/.config/fontconfig/fonts.conf" \
 cfl="$EDITOR /home/alex/.config/lf/lfrc" \
 cfs="$EDITOR /home/alex/.config/sxhkd/sxhkdrc" \
 cfbs="$EDITOR /home/alex/.config/bspwm/bspwmrc" \
+cfq="$EDITOR /home/alex/.config/qutebrowser/config.py" \

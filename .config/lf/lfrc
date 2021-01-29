@@ -23,11 +23,12 @@ set icons						# Enable icons. Requires nerd fonts and LF_ICONS variable.
 #set hidden true
 set preview true
 set drawbox true
-set ratios 1:3
+set ratios 1:2:7
 set ignorecase true
 set number
 set scrolloff 10
 set timefmt '2006.01.02 15:04:05'
+set promptfmt "\033[32;1m%u@%h\033[0m:\033[34;1m\033[0m\033[1m%f\033[0m"
 
 # cmds/functions
 cmd open ${{
@@ -127,6 +128,7 @@ map unLink :{{
 }}
 
 #{{{ TODO - Arhived files }}}
+# -- zip
 cmd zip ${{
 	set -f
   if [[ -d $fx ]]; then
@@ -143,8 +145,24 @@ cmd zip ${{
 		notify-send "to pack" "$name.zip"
 	fi
 }}
+# -- tgz
+cmd tgz ${{
+	set -f
+  if [[ -d $fx ]]; then
+  cp -r $fx/ $f-tgz
+  (cd $f-tgz/ ; tar zcvf $f.tgz .)
+  rm -rf $f-tgz/
+	notify-send "to pack" "$f.tgz"
+	fi
+
+	if [[ -f $f ]]; then
+		fname=$(basename $f)
+		name=${fname%.*}
+    tar zcvf $name.tgz $fx
+		notify-send "to pack" "$name.tgz"
+	fi
+}}
 cmd tar %tar cvf "$f.tar" "$f"
-cmd tgz %tar cvzf "$f.tgz" "$f"
 cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
 
 #** unpack
@@ -355,7 +373,7 @@ map st :{{
 
 #** set ratios/preview
 map sr :{{
-    set ratios 1:3
+    set ratios 1:2:6
 }}
 
 map sR :{{
@@ -376,3 +394,37 @@ map sP :{{
 
 
 ##########################
+cmd zle-cd %printf 'cd %q && zle reset-prompt\n' "$PWD" >&$ZLE_FIFO
+
+cmd zle-insert-relative %{{
+    for f in $fx; do
+        printf 'LBUFFER+="${LBUFFER:+ }${(q)$(realpath %q --relative-to=$PWD)}"\n' "$f" >&$ZLE_FIFO
+    done
+}}
+
+cmd zle-insert-absolute %{{
+    for f in $fx; do
+        printf 'LBUFFER+="${LBUFFER:+ }%q"\n' "$f" >&$ZLE_FIFO
+    done
+}}
+
+cmd zle-init :{{
+    map . zle-cd
+    map a zle-insert-relative
+    map A zle-insert-absolute
+}}
+
+&[[ -n "$ZLE_FIFO" ]] && lf -remote "send $id zle-init"
+##########################
+
+
+%{{
+    w=$(tput cols)
+    if [ $w -le 80 ]; then
+        lf -remote "send $id set ratios 1:2"
+    elif [ $w -le 160 ]; then
+        lf -remote "send $id set ratios 1:3:4"
+    else
+        lf -remote "send $id set ratios 1:3:7"
+    fi
+}}

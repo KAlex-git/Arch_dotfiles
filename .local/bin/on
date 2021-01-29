@@ -1,5 +1,5 @@
 #!/bin/sh
 
-on="$HOME/opt/P3X-OneNote-2020.10.105.AppImage &> /dev/null & disown & exit "
+on="$HOME/opt/P3X-OneNote*.AppImage &> /dev/null & disown & exit "
 
 notify-send -i "$HOME/.local/share/icons/onenote.png" 'Welcome to "p3x-onenote"' -t 10000 && $on

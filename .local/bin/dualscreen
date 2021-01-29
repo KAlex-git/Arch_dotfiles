@@ -18,9 +18,9 @@ if [[ "$WM" == "dwm" ]]; then
 	notify-send 'dwm'
 else
 	$2scr
-	notify-send 'bspwm'
+	#notify-send 'bspwm'
 
-	pgrep -u $UID -x polybar && killall -q polybar
-	$HOME/.config/polybar/launchpolybar.sh | $SHELL & disown ;exit
+	#pgrep -u $UID -x polybar && killall -q polybar
+	#$HOME/.config/polybar/launchpolybar.sh | $SHELL & disown ;exit
 
 fi

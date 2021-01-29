@@ -3,7 +3,7 @@
 source $HOME/.local/bin/shellColor.sh
 ##
 ##
-pack="mediainfo odt2txt highlight atool odt2txt w3m pdftotext catdoc docx2txt"
+pack="mediainfo odt2txt highlight atool odt2txt w3m pdftotext catdoc docx2txt xlsx2csv"
 pacman -Qq $pack || yay -S $pack
 
 pathfull="$(realpath "$0" | sed 's|\(.*\)/.*|\1|')"

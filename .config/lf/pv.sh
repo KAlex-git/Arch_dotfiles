@@ -64,21 +64,24 @@ handle_extension() {
             # Preview as text conversion
             odt2txt "${FILE_PATH}"
             exit 1;;
-				*.doc) catdoc "${FILE_PATH}" ;;
-				*.docx) docx2txt "${FILE_PATH}" - ;;
+				doc|rtf) catdoc "${FILE_PATH}" ;;
+				docx) docx2txt "${FILE_PATH}" - ;;
+
+
 
         # HTML
         htm|html|xhtml)
             # Preview as text conversion
             w3m -dump "${FILE_PATH}"
             lynx -dump -- "${FILE_PATH}"
-            elinks -dump "${FILE_PATH}"
             ;; # Continue with next handler on failure
         # CSV
 				csv)
             # Preview as text conversion
 						cat "${FILE_PATH}" | sed -e 's/,,/, ,/g' | column -t -s, | less -S -#5 -N
+						xlsx2csv "${FILE_PATH}" && exit 5 ;exit 1
 						;;
+
     esac
 }
 

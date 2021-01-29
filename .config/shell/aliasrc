@@ -706,3 +706,7 @@ alias -g CA="2>&1 | cat -A"
 alias -g NE="2> /dev/null"
 alias lastl='last | head -5 | tr -s " "' # Last log-ins
 alias -g NUL="> /dev/null 2>&1"alias hgrep="fc -El 0 | grep"
+
+
+#
+wp(){ OpenGulpIndex.py ;}

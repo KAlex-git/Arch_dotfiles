@@ -28,3 +28,4 @@ cff	$HOME/.config/fontconfig/fonts.conf
 cfl	$HOME/.config/lf/lfrc
 cfs $HOME/.config/sxhkd/sxhkdrc
 cfbs $HOME/.config/bspwm/bspwmrc
+cfq $HOME/.config/qutebrowser/config.py

@@ -41,3 +41,4 @@ hash -d cff=/home/alex/.config/fontconfig/fonts.conf
 hash -d cfl=/home/alex/.config/lf/lfrc 
 hash -d cfs=/home/alex/.config/sxhkd/sxhkdrc 
 hash -d cfbs=/home/alex/.config/bspwm/bspwmrc 
+hash -d cfq=/home/alex/.config/qutebrowser/config.py 

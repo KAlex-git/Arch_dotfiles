@@ -57,6 +57,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'scrooloose/syntastic'
 Plug 'lilydjwg/colorizer'
+Plug 'lervag/vimtex'
 call plug#end()
 
 " Some basics:
@@ -195,6 +196,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 " Runs a script that cleans out tex build files whenever I close out of a .tex file.
 	autocmd VimLeave *.tex !texclear %
+"	autocmd BufWritePost *.tex silent! execute "!pdflatex % >/dev/null 2>&1" | redraw!
 
 " Ensure files are read as what I want:
 	"let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
@@ -343,8 +345,8 @@ noremap XX "+x<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" tabs movement Tabs
-"nnoremap <Tab> :tabn<CR>
-nnoremap <S-Tab> :tabp<CR>
+"nnoremap <TAB> :tabn<CR>
+nnoremap <S-TAB> :tabp<CR>
 nnoremap <silent> <S-t> :tabnew<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -420,9 +422,16 @@ au BufRead,BufNewFile tex.snippets set filetype=tex
 au BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
 au BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
 au BufRead,BufNewFile *.tex set filetype=tex
+"au BufRead,BufNewFile *.py colorscheme molokai
 au BufRead,BufNewFile tutor.edu,*.txt colorscheme my_colors
 au BufRead,BufNewFile rss_example colorscheme my_colors
 au BufRead,BufNewFile rss_example set foldmethod=manual
+
+"" syntax python
+Plug 'vim-python/python-syntax'
+let g:python_highlight_all = 1
+let g:python_highlight_func_calls = 1
+let g:python_highlight_builtins = 1
 
 Plug 'tomasiser/vim-code-dark'
 set termguicolors
@@ -457,4 +466,4 @@ set foldlevel=1									" Первый уровень вложенности о�
 
 "Для того чтобы vim помнил fold-ы снова при открытии файла нужно добависть в вам файл конфига vimrc следующие строки
 autocmd BufWinLeave *.rss mkview
-autocmd BufWinEnter *.rss silent loadview
+autocmd bufwinenter *.rss silent loadview
