@@ -37,6 +37,7 @@ while true; do
 					rsync -avzur --delete "$HOME/.config/mpv/scripts" "$HOME/dev/Arch_dotfiles/.config/mpv"
 
 					rsync -avzur --delete "$HOME/.config/sxiv" "$HOME/dev/Arch_dotfiles/.config"
+					rsync -avzur --delete "$HOME/.config/qutebrowser" "$HOME/dev/Arch_dotfiles/.config"
 					rsync -avzur --delete "$HOME/.config/zsh" "$HOME/dev/Arch_dotfiles/.config"
 
 					rsync -avzur --delete "$HOME/.local/bin" $HOME/dev/Arch_dotfiles/.local
