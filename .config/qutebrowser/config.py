@@ -79,7 +79,7 @@ c.aliases = {
         "map_yandex": "open https://yandex.ru/maps/20553/konotop/geo/vyshneva_vulytsia/1449347102/?ll=33.194191%2C51.219324&z=17",
         "gdm":       "open -t https://docs.google.com/spreadsheets/d/1Z-0AZaGWbsSpYEXBoH0Rw-frp2HsZu8K/edit#gid=1579738534",
         "privat24": "open https://privat24.privatbank.ua/p24/web/#statements%2Fcards%2F4149499104792724",
-        "s":        "open -t https://soundcloud.com/alexandr47733",
+        "s":        "open -t https://soundcloud.com/discover",
         "sd":       "open -t https://www.klickaud.co/",
         "pr":       "open -t https://proizd.ua/",
         'q':        'quit',
@@ -117,11 +117,6 @@ c.url.searchengines = {
 "?q": "https://github.com/qutebrowser/qutebrowser/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20{}",
 }
 
-# ** TODO bookmarks
-nmap('"', 'set-cmd-text -s :bookmark-load --tab')
-nmap('<Ctrl-m>', 'set-cmd-text -s :bookmark-del')
-nmap("'", 'set-cmd-text -s :quickmark-load --tab')
-
 # ** TODO Yanking and Pasting
 # don't need primary or extra yanks
 nmap('yd', 'yank domain')
@@ -144,13 +139,16 @@ nmap('ty', 'spawn --detach mpv "{url}"')
 config.bind(',s', 'spawn --detach mpv "{url}"')
 config.bind(',a', 'spawn st -e youtube-dl --extract-audio --audio-format mp3 --output  "~/Videos/YouTube/audio/%(title)s,%(ext)s" {url}')
 config.bind(',lwt', 'spawn st -e youtube-dl --extract-audio --audio-format mp3 --output  "/srv/http/lwt/media/%(title)s,%(ext)s" {url}')
-config.bind(',t', 'hint links spawn st -e transadd {hint-url}')
 config.bind(',v', 'spawn st -e youtube-dl --all-subs --output "~/Videos/%(title)s,%(ext)s" {url}')
 nmap('tg', 'spawn --detach dlg "{url}"')
 
-# ** scripts
-config.bind(',T','open -t https://translate.google.com/#auto/en/{primary}')    # translate
-config.bind(',t','spawn st -e ~/.config/qutebrowser/scripts/translate {primary}')    # test
+# ** TODO scripts
+config.bind(',r','spawn --userscript translate')    # translate
+# bookmarks
+config.bind('o', 'spawn --userscript O_marks tab')
+#config.bind('O', 'spawn --userscript O_quckmarks tab')
+# dic
+config.bind(',d', 'spawn --userscript dict')
 
 # ** TODO Navigation
 nmap('c', 'set-cmd-text :open --related {url:pretty}')          #open in current tab
@@ -162,7 +160,7 @@ nmap('e', 'scroll-page 0 -0.2')
 nmap('J', 'tab-next')
 nmap('K', 'tab-prev')
 ## tools tip: dublicate tab (yy, Pp)
-nmap('t',   'open -t')    # open homepage in new tab
+nmap('tt',   'open -t')    # open homepage in new tab
 nmap('tp', 'open -p')       # open new private window
 nmap('tn', 'tab-move -')    # tn and te for tab moving
 nmap('te', 'tab-move +')
@@ -224,12 +222,6 @@ config.bind('>4', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/t
 config.bind('>2', 'config-cycle config.source(colorthemes)')
 
 
-# Bindings to use dmenu rather than qutebrowser's builtin search.
-config.bind('o', 'spawn --userscript dmenu-open')
-config.bind(',O', 'hint -f images userscript dopen')
-#config.bind('O', 'spawn --userscript dmenu-open --tab')
-
-
 c.bindings.key_mappings = {
 '<Ctrl-[>': '<Escape>',
 '<Ctrl-6>': '<Ctrl-^>',
@@ -242,8 +234,8 @@ c.bindings.key_mappings = {
 }
 
 # ** TODO passthrough
-# config.bind('<Ctrl-V>', 'enter-mode passthrough')
-# config.bind('<Shift-Escape>', 'leave-mode', mode='passthrough')
+config.bind('<Ctrl-V>', 'enter-mode passthrough')
+config.bind('<Ctrl-Z>', 'leave-mode', mode='passthrough')
 # c.colors.statusbar.passthrough.bg = 'darkblue'
 # c.colors.statusbar.passthrough.fg = 'white'
 

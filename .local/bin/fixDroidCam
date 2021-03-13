@@ -1,0 +1,35 @@
+#!/bin/sh
+##
+source $HOME/.local/bin/shellColor.sh
+##
+##
+
+ dm(){ dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -l 22 -p "choice" ;}
+PROC="killall -q droidcam-cli"
+
+Dcli(){
+	if [[ ! -z "$(pgrep -u $UID -x droidcam-cli)" ]];then
+		killall -q droidcam-cli
+		notify-send "bay-bay"
+	else
+	notify-send "DroidCam-cli"
+	droidcam-cli adb 4747
+	fi
+}
+
+menu(){
+declare -a options=(\
+	"droidcam-cli"
+	"🪐 droidcam"
+)
+
+choice=$(echo "$(printf '%s\n' "${options[@]}")" | "dm" 'Open file: ')
+case "$choice" in
+	droidcam-cli)	Dcli;;
+	"🪐 droidcam") droidcam;;
+esac
+}
+
+case "$1" in
+	*) menu;;
+esac

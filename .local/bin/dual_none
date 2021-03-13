@@ -2,19 +2,30 @@
 #
 #
 #
-WM=$(ps -A | egrep -i "bspwm|dwm" | head -1 | awk '{print $4}')
+WM=$(ps -A | egrep -i "bspwm|dwm|xmonad" | head -1 | awk '{print $4}')
 2scrOFF=$(xrandr --output LVDS-1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output VGA-1 --off --output HDMI-1 --off)
 
 
 
 if [[ "$WM" == "dwm" ]]; then
 	"$2scrOFF"
-	notify-send 'dwm'
+	notify-send 'unenable VGA-1'
 else
 	"$2scrOFF"
-	notify-send 'bspwm'
+	notify-send 'unenable VGA-1'
+		# Comment VGA
+		enableVGA=$(cat ~/.config/xmobar/xmobarrc0 | sed -n '16p'| grep -Eo "\--" )
+		if [[ "$enableVGA" == "--" ]]; then
+			exit 1
+		else
+			sed -i '16 s/^/--/' .config/xmobar/xmobarrc0
+			sed -i '18 s/--//' .config/xmobar/xmobarrc0
+		fi
 
-	pgrep -u $UID -x polybar && killall -q polybar
-	$HOME/.config/polybar/launchpolybar.sh | $SHELL & disown ;exit
-
+	sleep 2
+xmonad --restart
 fi
+
+# Cheking
+##	pgrep -u $UID -x polybar && killall -q polybar
+##	$HOME/.config/polybar/launchpolybar.sh | $SHELL & disown ;exit

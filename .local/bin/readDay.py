@@ -1,0 +1,1 @@
+/home/alex/projects/TestPython/readDay.py

@@ -9,10 +9,12 @@ ist(){
     esac
 }
 
-
+# Checking installed packages a wine etc.
 [[ -e "$prog/$installpkg" ]] &&	ist || $wi
 
 
+# Watchtower Library (apps a win10)
+Watchtower(){
 ## Проверка на запущенный процесс и если запущенн....убивается
 [[ ! -z $(pgrep -xU $UID WTLibrary.exe) ]] && killall WTLibrary.exe
 
@@ -20,3 +22,18 @@ wi="$(\
 notify-send  -i "$HOME/.local/share/icons/wtl.png" "wt"
 wine "$HOME/.local/share/wineprefixes/default/drive_c/Program Files/Watchtower/Watchtower Library/U/WTLibrary.exe" 2>/dev/null $ disown ; exit \
 	)"
+}
+
+
+# Open 'si-U_Всё_Писание'
+si(){ open $HOME/Documents/SKE/si-U_Всё_Писание.pdf ;}
+
+# Open 'SKE'
+sk() { du -a ~/SKE/SKE-U/* | awk '{print $2}' | fzf | xargs -r -I % open % ; disown ; exit ;}
+
+while getopts "wsk" o; do case "${o}" in
+	w) Watchtower ;;
+	s) si ;;
+	k) sk ;;
+	*) printf "Invalid option: -%s\\n" "$OPTARG" && exit 1 ;;
+esac done

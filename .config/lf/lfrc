@@ -32,18 +32,24 @@ set promptfmt "\033[32;1m%u@%h\033[0m:\033[34;1m\033[0m\033[1m%f\033[0m"
 
 # cmds/functions
 cmd open ${{
+    case "$f" in
+        *.xmind) notify-send -i "$HOME/.local/share/icons/xmind.png" "mapping"; xmind-2020 $fx ;;
+        *.docx) notify-send -i "$HOME/.local/share/icons/libreoffice.png" "L"; libreoffice $fx ;;
+        *.xlsx|*.xls) notify-send -i "$HOME/.local/share/icons/libreoffice.png" "L"; libreoffice $fx ;;
+				*.m3u)	mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $fx ;;
+    esac
     case $(file --mime-type $f -b) in
     	text/troff) man ./ $f;;
     	text/html) $BROWSER $f;;
-        text/*) $EDITOR $fx;;
-	image/x-xcf|image/svg+xml) setsid gimp $f >/dev/null 2>&1 & ;;
-	image/svg+xml) display -- $f ;;
-	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" | sxiv -aio 2>/dev/null | lf-select ;;
-	audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
-	video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
-	application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
-	application/csv) $TERMINAL -e sc-im $fx ;;
-	application/octet-stream) wine start /ProgIDOpen Wtlib.Favorite $f >/dev/null 2>&1 & ;;
+        text/*|application/json) $EDITOR $fx;;
+        image/x-xcf|image/svg+xml) setsid gimp $f >/dev/null 2>&1 & ;;
+	    image/svg+xml) display -- $f ;;
+	    image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" | sxiv -aio 2>/dev/null | lf-select ;;
+	    audio/*) mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f ;;
+	    video/*) setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) $f -quiet >/dev/null 2>&1 & ;;
+	    application/pdf) setsid zathura $fx >/dev/null 2>&1 & ;;
+	    application/csv) $TERMINAL -e sc-im $fx ;;
+	    application/octet-stream) wine start /ProgIDOpen Wtlib.Favorite $f >/dev/null 2>&1 & ;;
 
         *) for f in $fx; do setsid $OPENER $f >/dev/null 2>&1 & done;;
     esac
@@ -192,8 +198,18 @@ cmd chwn ${{
 #{{{ TODO rename }}}
 cmd vimv ${{			# vimv
 	set -f
+	inst_vimv="$HOME/.config/install_system/AUR_PKG/vimv/vimv"
+	VIMV="$HOME/.local/bin/vimv"
+if [[ -f "$VIMV" ]]; then
 	filename=$(basename "$fx")
 	vimv $filename
+else
+	notify-send "📦 vimv" "must be installed for this function."
+	notify-send "Please wait few seconds 😀"
+	cp "$inst_vimv" "$HOME/.local/bin/"
+	filename=$(basename "$fx")
+	vimv $filename
+fi
 }}
 cmd r_ ${{			# r_
 	set -f
@@ -225,23 +241,33 @@ cmd source_preview ${{
 	set -f
 sed -i '1cset previewer ~/.config/lf/preview' /home/alex/.config/lf/lfrc
 notify-send 'source preview'
-(lfrun && killall -q lf)
+$(lfrun && killall -q "lf")
 }}
 cmd source_pv.sh ${{
 set -f
 sed -i '1cset previewer /home/alex/.config/lf/pv.sh' /home/alex/.config/lf/lfrc
+killall -q "tail" && $(lf)
+#pgrep -HUP $(pgrep -u $UID -x lf)
+#kill -TERM kill -TERM $(pgrep -HUP $(pgrep -u $UID -x "lf")
 notify-send 'source pv.sh'
-(killall -q lfrun && lf)
+
+#$TERMINAL -e lf & disown ;exit
+killall -q lfrun
 }}
 ## cd location
 cmd fzf_jump ${{
-  res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to location')"
+  res="$(find ~ -maxdepth 3 | fzf --reverse --header='Jump to location')"
   if [ -f "$res" ]; then
     cmd="select"
   elif [ -d "$res" ]; then
     cmd="cd"
   fi
   lf -remote "send $id $cmd \"$res\""
+}}
+cmd merge ${{
+set -f
+merge.sh "$1" "$2"
+
 }}
 ###################################
 	 #																#
@@ -276,12 +302,12 @@ map <a-k>			page-up
 map <a-j>			page-down
 #** copy and move
 map dd				delete
-map C					copyto
-map J					$lf -remote "send $id cd $(cut -d'	' -f2 ~/.config/shell/bm-dirs| fzf)"
-map K					fzf_jump
-map F					$lf -remote "send $id select '$(fzf)'"
-map M					moveto
-map P					pasteto
+map C				copyto
+map J				$lf -remote "send $id cd $(cut -d'	' -f2 ~/.config/shell/bm-dirs| fzf)"
+map <c-f>			fzf_jump
+map F				$lf -remote "send $id select '$(fzf)'"
+map M				moveto
+map P				pasteto
 map pp				paste
 map pl				paste_link
 map yy				copy
@@ -296,6 +322,7 @@ map ai				!gstat $f || stat $f; echo ; du -sh $f ; echo ; file -b -p $f
 map au				!du -hsx * | sort -rh | less
 map cc				chmd			## chmod
 map cw				chwn			## chown
+map rg              merge
 # rename ...
 map ea 				open_config
 map ee				$$EDITOR $f
@@ -322,8 +349,8 @@ map us 					push :glob-select<space>*.
 map ue 					unselect
 
 
-map c<c-c>		source_preview
-map c<c-d>		source_pv.sh
+map <c-x>j		source_preview
+map <c-x>k		source_pv.sh
 map oc				!inkscape "$f"
 map og 				!gimp "$f"
 map -					$lf -remote "send $id $(cd -)"
@@ -334,17 +361,20 @@ map -					$lf -remote "send $id $(cd -)"
 #map x $$f
 map x !$f
 
-#
+# test
 map gF						$gFFolderINCloud.sh
 map gC						$gCCloud_in_folder.sh
 
+# add info a dirs/files
+map i !mediainfo "$fx"
 
 
 #* FAST DIRS
 # >> fast dirs start
 map fdb				$lf -remote "send $id cd ~/Documents/BOOKS"
 map fdd				$lf -remote "send $id cd ~/Documents"
-map fci				$lf -remote "send $id cd ~/.config/install_system"
+map fii				$lf -remote "send $id cd ~/.config/install_system"
+map fia				$lf -remote "send $id cd ~/.config/install_system/AUR_PKG"
 map fcc				$lf -remote "send $id cd ~/.config/"
 map fD				$lf -remote "send $id cd ~/Downloads"
 map fh				$lf -remote "send $id cd ~"
@@ -360,6 +390,9 @@ map fmb				$lf -remote "send $id cd /mnt/backup"
 map fmi				$lf -remote "send $id cd /mnt/iso"
 map fmu				$lf -remote "send $id cd /mnt/usb"
 map fmn				$lf -remote "send $id cd /mnt/win10"
+map fpr				$lf -remote "send $id cd /home/alex/projects"
+map fpa				$lf -remote "send $id cd /home/alex/projects/audio_subtitle"
+map fpb				$lf -remote "send $id cd /home/alex/projects/build"
 
 # >> fast dirs end
 
@@ -428,3 +461,5 @@ cmd zle-init :{{
         lf -remote "send $id set ratios 1:3:7"
     fi
 }}
+
+map q !killall -9 lf || killall -9 lfrun

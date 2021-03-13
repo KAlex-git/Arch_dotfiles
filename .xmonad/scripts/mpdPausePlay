@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+#
+a="$(mpc | grep -Eo "playing")"
+
+if [[ $a = "playing" ]]; then
+    mpc pause
+else
+    mpc play
+fi

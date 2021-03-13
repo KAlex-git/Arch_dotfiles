@@ -8,14 +8,36 @@ case "$(readlink -f /sbin/init)" in
 	*openrc*) reb="sudo -A openrc-shutdown -r"; shut="sudo -A openrc-shutdown -p" ;;
 esac
 
-cmds="\
-🔒 lock		slock
-🚪 leave dwm	kill -TERM $(pgrep -u $USER "\bdwm$")
-♻ renew dwm	kill -HUP $(pgrep -u $USER "\bdwm$")
-🐻 hibernate	slock ${hib:-systemctl suspend-then-hibernate -i}
-🔃 reboot	${reb:-sudo -A reboot}
-🖥 shutdown	${shut:-sudo -A shutdown -h now}"
 
-choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu)" || exit 1
+declare -a options=("🔒 lock"
+"🚪 leave"
+"♻  renew"
+"🐻 hibernate"
+"🔃 reboot"
+"🖥shutdown"
+)
 
-`echo "$cmds" | grep "^$choice	" | cut -d '	' -f2-`
+# The combination of echo and printf is done to add line breaks to the end of each
+# item in the array before it is piped into dmenu.  Otherwise, all the items are listed
+# as one long line (one item).
+
+reDWM(){
+	if [[ "$(pgrep -u $USER "\bdwm$")" > 0 ]];then
+		kill -HUP $(pgrep -u $USER "\bdwm$|xmonad-x86_64-l|bspwm")
+	elif [[ "$(pgrep -u $USER "xmonad-x86_64-l")" > 0 ]];then
+		xmonad --recompile
+		xmonad --restart
+	else
+		kill -HUP $(pgrep -u $USER "bspwm")
+	fi
+
+}
+choice=$(echo "$(printf '%s\n' "${options[@]}")" | dmenu -b -p '💣: ')
+case "$choice" in
+	"🔒 lock") slock ;;
+		"🚪 leave")				kill -TERM kill -TERM $(pgrep -u $USER "\bdwm$|xmonad|bspwm") ;;
+		"♻  renew")				reDWM ;;
+		"🐻 hibernate")		slock ${hib:-systemctl suspend-then-hibernate -i} ;;
+		"🔃 reboot")			${reb:-sudo -A reboot} ;;
+		"🖥shutdown")			${shut:-sudo -A shutdown -h now} ;;
+esac

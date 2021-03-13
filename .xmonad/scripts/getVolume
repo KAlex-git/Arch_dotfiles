@@ -1,0 +1,11 @@
+#!/bin/sh
+
+vol="$(pamixer --get-volume)"
+
+if [ "$vol" -gt "70" ]; then
+	echo "VOL:$vol%"
+elif [ "$vol" -gt "40" ]; then
+	echo "VOL: $vol%"
+else
+	echo "$vol%"
+fi

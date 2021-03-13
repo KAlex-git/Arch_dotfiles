@@ -135,7 +135,7 @@ fi
 # Opens the Selected fuzzy finder with the options set
 SelectFinder() {
   case "$FuzzyFinder" in
-    dmenu) dmenu -i -p "$Prompt" -fn "$Font" -l "$VerticalLines" \
+    dmenu) dmenu -i -b -p "$Prompt" -fn "$Font" -l "$VerticalLines" \
       -m "$Monitor" -nb "$BackgroundColor" -nf "$ForegroundColor" \
       -sb "$SelectedBackgroundColor" -sf "$SelectedForegroundColor" ;;
     fzf) fzf ;;

@@ -33,7 +33,23 @@ fkill() {
 
 
 ## -- START ----------- OPEN {} FILES
-ff() { cd $HOME ;du -a ~/.local/bin/* | awk '{print $2}' | fzf | xargs -r -I % $EDITOR % && disown ; exit ;}
+ff() { cat $HOME/.config/bookmenu/configs | sed 's/^.*://' | fzf | xargs -r -I % $EDITOR % && disown ; exit ;}
 fd() { lf "$(awk '{print $2}' ~/.config/shell/bm-dirs | grep -vi memes | fzf | sed "s|~|$HOME|")" ;}
+
+#ff() { cd $HOME ;du -a ~/.local/bin/* | awk '{print $2}' | fzf | xargs -r -I % $EDITOR % && disown ; exit ;}
+## find
+#ff() {
+#  SEARCH_PATH=$2
+#
+#  if [[ -z $SEARCH_PATH ]]; then
+#    SEARCH_PATH=.
+#  fi
+#
+#  find $SEARCH_PATH -maxdepth 3 | grep -i "$1"
+#}
+
+## -- END -------------- find && rename
+
+
 
 ## -- END ----------- OPEN {} FILES

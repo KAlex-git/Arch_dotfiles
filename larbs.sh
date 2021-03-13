@@ -187,7 +187,11 @@ for x in curl base-devel git ntp zsh; do
 done
 
 dialog --title "LARBS Installation" --infobox "Synchronizing system time to ensure successful and secure installation of software..." 4 70
-ntpdate 0.us.pool.ntp.org >/dev/null 2>&1
+sudo timedatectl set-timezone EET 2>&1
+sudo timedatectl set-timezone EST 2>&1
+sudo ntpdate -s time.nist.gov 2>&1
+timedatectl set-timezone Europe/Kiev 2>&1
+sudo timedatectl set-ntp true 2>&1
 
 adduserandpass || error "Error adding username and/or password."
 

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+
+spb() {
+declare -a options=("Ohm_law"
+	"Wire cross section - выбор"
+	"usb")
+
+choice=$(echo "$(printf '%s\n' "${options[@]}")" | dmenu -l 5 -b -p 'Electro: ')
+	case "$choice" in
+		"Ohm_law") sxiv $HOME/Documents/BOOKS/Electro/Схемы/Ohm_law.jpg ;;
+		"Wire cross section - выбор") sxiv $HOME/Documents/BOOKS/Electro/Схемы/Таблица_расчета_проводов_по_нагрузке.png ;;
+		"usb") sxiv $HOME/Documents/BOOKS/Electro/USB/microUSB-data_cable.png
+ ;;
+		*)
+	esac
+}
+
+
+while getopts "hor" o; do case "${o}" in
+	h) printf "Optional arguments for custom use:\\n  -r: previewer a [resistor]\\n  -o: other\\n  -h: Show this message\\n" && exit 1 ;;
+	o) spb ;;
+	r) echo "$urls" | dmenu -i -p 'Copy which url?' -l 10 | tr -d '\n' | xclip -selection clipboard ;;
+	*) printf "Invalid option: -%s\\n" "$OPTARG" && exit 1 ;;
+esac done

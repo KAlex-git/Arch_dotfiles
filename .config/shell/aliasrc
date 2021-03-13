@@ -35,7 +35,7 @@ alias fontUpdate="sudo fc-cache -f -v"
 	#ll='ls -hlaN --color=auto --group-directories-first'\
 alias \
 	ll='/usr/bin/ls -hlaN --color=auto --group-directories-first'\
-	ls="ls_ext" \
+	ls="ls -hN --color=auto --group-directories-first" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
 	book="abook -C $HOME/.config/abook/abookrc" \
@@ -58,6 +58,7 @@ alias \
 	xq="xbps-query" \
 	z="zathura" \
 	q='exit' \
+    au='ncdu' \
   dt="cd /home/alex/Documents/TEX ; ls -l" \
 
     per(){ $EDITOR /home/alex/Documents/TEX/charaсter/charter.tex ;}
@@ -215,22 +216,6 @@ csv (){
 							   может это часть ^(0_0)^ ${reset} "
 			fi
 	}
-
-ff() { cd $HOME ;du -a ~/.local/bin/* | awk '{print $2}' | fzf | xargs -r -I % $EDITOR % && disown ; exit ;}
-
-## find
-#ff() {
-#  SEARCH_PATH=$2
-#
-#  if [[ -z $SEARCH_PATH ]]; then
-#    SEARCH_PATH=.
-#  fi
-#
-#  find $SEARCH_PATH -maxdepth 3 | grep -i "$1"
-#}
-
-## -- END -------------- find && rename
-
 
 
 
@@ -392,7 +377,7 @@ site()
 
 
 ## -- open in file SKE/* -------------------------
-   sk() { du -a ~/SKE/SKE-U/* | awk '{print $2}' | fzf | xargs -r -I % pdfx % ; disown ; exit ;}
+   sk() { du -a ~/SKE/SKE-U/* | awk '{print $2}' | fzf | xargs -r -I % open % ; disown ; exit ;}
    ks() { du -a ~/SKE/SKE-U/* | awk '{print $2}' | fzf | xargs -r -I % open-files % ; disown ; exit ;}
    ыл() { du -a ~/SKE/SKE-U/* | awk '{print $2}' | fzf | xargs -r -I % open-files % ; disown ; exit ;}
    лы() { du -a ~/SKE/SKE-U/* | awk '{print $2}' | fzf | xargs -r -I % open-files % ; disown ; exit ;}
@@ -459,11 +444,11 @@ tn()
 }
 ## go to ... cd and open
 s() {
-	if [[  -f "$1" ]]
+	if [[  -d "$@" ]]
 	then
-		test-sh "$1" & disown ; exit
-	else
 		builtin cd -P "$1" || return; ls
+	else
+		open "$1" & disown ; exit
 	fi
 }
 ## `s` or `o`
@@ -503,11 +488,13 @@ bue() {	buku -e "$1".db ;buku -e "$1".html; buku -e "$1".md ;}
 
 
 ## Speech-Plan
-pb() {
-	echo " press ( l ) >> open { .../test-USB_micro.png } "
-       	read choice
+spb() {
+    declare -a options=("Ohm_law"
+	"Сечение-выбор")
+    choice=$(echo "$(printf '%s\n' "${options[@]}")" | dmenu -l 5 -b -p 'Electro: ')
 	case "$choice" in
-		l) o ~/Documents/BOOKS/Electro/test-USB_micro.png ;;
+		Ohm_law) o $HOME/Documents/BOOKS/Electro/Схемы/Ohm_law.jpg ;;
+				"Сечение-выбор") o $HOME/Documents/BOOKS/Electro/Схемы/Таблица_расчета_проводов_по_нагрузке.png ;;
 		*)
 	esac
 }
@@ -672,17 +659,18 @@ run() {
 sev(){xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }' ;}
 
 # youtube-dl
-alias yta-aac="youtube-dl --extract-audio --audio-format aac "
-alias yta-best="youtube-dl --extract-audio --audio-format best "
-alias yta-flac="youtube-dl --extract-audio --audio-format flac "
-alias yta-m4a="youtube-dl --extract-audio --audio-format m4a "
-alias yta-mp3="youtube-dl --extract-audio --audio-format mp3 "
-alias yta-opus="youtube-dl --extract-audio --audio-format opus "
-alias yta-vorbis="youtube-dl --extract-audio --audio-format vorbis "
-alias yta-wav="youtube-dl --extract-audio --audio-format wav "
-alias ytv-best="youtube-dl -f bestvideo+bestaudio "
-alias ytab="yt -x -f bestaudio/best"
-alias yt="youtube-dl --add-metadata -i"
+alias \
+    yta-aac="youtube-dl --extract-audio --audio-format aac " \
+    yta-best="youtube-dl --extract-audio --audio-format best " \
+    yta-flac="youtube-dl --extract-audio --audio-format flac " \
+    yta-m4a="youtube-dl --extract-audio --audio-format m4a " \
+    yta-mp3="youtube-dl --extract-audio --audio-format mp3 " \
+    yta-opus="youtube-dl --extract-audio --audio-format opus " \
+    yta-vorbis="youtube-dl --extract-audio --audio-format vorbis " \
+    yta-wav="youtube-dl --extract-audio --audio-format wav " \
+    ytv-best="youtube-dl -f bestvideo+bestaudio " \
+    yta="yt -x -f bestaudio/best" \
+    yt="youtube-dl --add-metadata -i"
 
 ytta() {
 	echo "[ Download & convert to mp3 from textfile ]"
@@ -710,3 +698,19 @@ alias -g NUL="> /dev/null 2>&1"alias hgrep="fc -El 0 | grep"
 
 #
 wp(){ OpenGulpIndex.py ;}
+calc(){$EDITOR $HOME/.config/calcurse/conf ;}
+#tt(){ tar -czf "../${PWD##*/}.tar.gz" . ;} ## Arhive current directory
+tt(){ mpv -fs -quiet `youtube-dl -g "$1"` ;}
+
+subt(){
+   printf "First video\nSecond audio"
+   echo -n "$@" '[y/n] ' ; read -r ans
+    case "$ans" in
+        y*|Y*) ffmpeg -threads 0 -i $1 -filter_complex 'ass="$2"[1];[1]concat=n=3' -preset ultrafast -y final.mp4 ;;
+        *) return 1 ;;
+    esac
+}
+alias doomsync="~/.emacs.d/bin/doom sync"
+alias doomdoctor="~/.emacs.d/bin/doom doctor"
+alias doomupgrade="~/.emacs.d/bin/doom upgrade"
+alias doompurge="~/.emacs.d/bin/doom purge"

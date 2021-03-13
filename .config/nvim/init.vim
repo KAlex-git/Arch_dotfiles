@@ -30,36 +30,6 @@ set imsearch=0
 """""""""""""""""""""""""""""""""""""""""
 let mapleader =","
 
-if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
-	echo "Downloading junegunn/vim-plug to manage plugins..."
-	silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
-	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim
-	autocmd VimEnter * PlugInstall
-endif
-
-call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
-Plug 'avelino/vim-bootstrap-updater'
-Plug 'alvan/vim-closetag'
-Plug 'VebbNix/lf-vim'
-Plug 'tpope/vim-surround'
-Plug 'preservim/nerdtree'
-Plug 'junegunn/goyo.vim'
-Plug 'jreybert/vimagit'
-Plug 'lukesmithxyz/vimling'
-Plug 'vimwiki/vimwiki'
-Plug 'bling/vim-airline'
-Plug 'tpope/vim-commentary'
-Plug 'kovetskiy/sxhkd-vim'
-Plug 'ap/vim-css-color'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'easymotion/vim-easymotion'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'scrooloose/syntastic'
-Plug 'lilydjwg/colorizer'
-Plug 'lervag/vimtex'
-call plug#end()
-
 " Some basics:
 set clipboard+=unnamedplus
 nnoremap c "_c
@@ -103,31 +73,6 @@ set tabstop=2
 let vim_bootstrap_langs = "python,ruby,html,javascript"
 let vim_bootstrap_editor = "nvim"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" easymotion
-	"" // отключаем зависимость от регистра
-	   let g:EasyMotion_smartcase = 1
-	"" // отключаем тень (в момент выбора цели весь текст помечается как комментарий)
-	   let g:EasyMotion_do_shade = 0
-	"" // какой группой подсвечивать цели
-	   hi link EasyMotionTarget Search
-	"" find symbol - переместиться к любому символу в файле
-	   nmap fs <Plug>(easymotion-s)
-	"" find line - переместиться к любому символу в строке
-	   nmap fl <Plug>(easymotion-sl)
-	 ""hi EasyMotionTarget2First ctermfg=202 ctermbg=None cterm=None
-	 ""hi EasyMotionTarget2Second ctermfg=202 ctermbg=None cterm=None
-	  hi EasyMotionTarget ctermbg=none ctermfg=green
-          hi EasyMotionShade  ctermbg=none ctermfg=blue
-          hi EasyMotionTarget2First ctermbg=none ctermfg=red
-          hi EasyMotionTarget2Second ctermbg=none ctermfg=lightred
-          hi EasyMotionMoveHL ctermbg=green ctermfg=black
-          hi EasyMotionIncSearch ctermbg=green ctermfg=black
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""------------- gU {motion} --------------"""
-"""
-""" gU {motion} - для преобрaзования фрагмента текста в верхний регистр
-""" gUgn (gn) - Если курсор назодится в пределах совпадения, тогда
-""" 		команда 'gn' будет текущее совпадения
 
 """------------- * --------------"""
 """ Поиск слова под курсором возможен благодаря '*'
@@ -148,15 +93,16 @@ let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips']
 let g:UltiSnipsEditSplit="vertical"
 "let g:UltiSnipsExpandTrigger = ";"
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'Valloric/YouCompleteMe'
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+"" TODO  YouCompleteMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 	let g:ycm_server_python_interpreter='python3.9'
 	let g:ycm_autoclose_preview_window_after_completion = 1
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" Nerd tree
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" TODO Nerd tree
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <C-n> :NERDTreeToggle<CR>
 """ open ....
 "autocmd StdinReadPre * let s:std_in=1
@@ -167,6 +113,10 @@ map <C-n> :NERDTreeToggle<CR>
 	nm <leader>i :call ToggleIPA()<CR>
 	imap <leader>i <esc>:call ToggleIPA()<CR>a
 	nm <leader>q :call ToggleProse()<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" TODO Misc
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Shortcutting split navigation, saving a keypress:
 	map <C-h> <C-w>h
@@ -198,10 +148,6 @@ map <C-n> :NERDTreeToggle<CR>
 	autocmd VimLeave *.tex !texclear %
 "	autocmd BufWritePost *.tex silent! execute "!pdflatex % >/dev/null 2>&1" | redraw!
 
-" Ensure files are read as what I want:
-	"let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-	"map <leader>v :VimwikiIndex
-	"let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
 
 " Save file as sudo on files that require root permission
 	cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
@@ -351,8 +297,6 @@ nnoremap <silent> <S-t> :tabnew<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ ---------------------------
-""" fix update plugins
-call map(values(g:plugs), {_, spec -> system(printf('cd %s && git checkout -f', spec.dir))})
 
 " Function for toggling the bottom statusbar:
 let s:hidden_all = 1
@@ -380,10 +324,10 @@ nnoremap <leader>h :call ToggleHiddenAll()<CR>
 	  autocmd!
 	  autocmd BufReadPost * call setpos(".", getpos("'\""))
 	augroup END
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Plug 'junegunn/tabularize'
+"""""""""""""""""""""""""""""""""""""""""""""""
+"" TODO tabularize
+"""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader=','
   if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
@@ -395,19 +339,20 @@ endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" TODO Source
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if !exists('g:vscode')
 	"source ~/.config/nvim/basic-setting.vim
 	source ~/.config/nvim/plugconfig/vimwiki.vim
-	"source ~/.config/nvim/plugconfig/easy-motion.vim
-	"source ~/.config/nvim/plugconfig/undotree.vim
-	"source ~/.config/nvim/plugconfig/emmet.vim
+	source ~/.config/nvim/plugconfig/easy-motion.vim
+	source ~/.config/nvim/plugconfig/plugins.vim
+	source ~/.config/nvim/plugconfig/emmet.vim
 	"source ~/.config/nvim/plugconfig/table-mode.vim
 	source ~/.config/nvim/plugconfig/goyo.vim
 	"source ~/.config/nvim/plugconfig/git-gutter.vim
 	"source ~/.config/nvim/plugconfig/vim-airline.vim
 	"source ~/.config/nvim/plugconfig/vim-hexokinase.vim
-	"source ~/.config/nvim/plugconfig/vim-fzf.vim
+	source ~/.config/nvim/plugconfig/vim-fzf.vim
 	"source ~/.config/nvim/plugconfig/fern.vim
 	source ~/.config/nvim/plugconfig/vim-closetag.vim
 	source ~/.config/nvim/plugconfig/coc.vim
@@ -415,13 +360,14 @@ endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" TODO Syntax Files
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" syntax
 au BufRead,BufNewFile abookrc,sh.snippets set filetype=sh
 au BufRead,BufNewFile tex.snippets set filetype=tex
 au BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
 au BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
 au BufRead,BufNewFile *.tex set filetype=tex
+au BufRead,BufNewFile xmobarrc0,xmobarrc1,xmobarrc2 set filetype=haskell
 "au BufRead,BufNewFile *.py colorscheme molokai
 au BufRead,BufNewFile tutor.edu,*.txt colorscheme my_colors
 au BufRead,BufNewFile rss_example colorscheme my_colors
@@ -459,11 +405,20 @@ set viminfo='1000,f1
 " :set foldmethod=marker    сворачивание на основе маркеров в тексте
 " :set foldmarker=bigin,end задаем маркеры начала и конца блока
 
-set foldenable									" отклключить фолдинг по умолчанию
-set foldmethod=indent						"
-set foldlevel=1									" Первый уровень вложенности открыт, остальные закрыты
-"set foldopen=all								" автоматическое открытие сверток при заходе в них
+" set foldenable									" отклключить фолдинг по умолчанию
+" set foldmethod=indent						"
+" set foldlevel=1									" Первый уровень вложенности открыт, остальные закрыты
+" set foldopen=all								" автоматическое открытие сверток при заходе в них
 
 "Для того чтобы vim помнил fold-ы снова при открытии файла нужно добависть в вам файл конфига vimrc следующие строки
 autocmd BufWinLeave *.rss mkview
 autocmd bufwinenter *.rss silent loadview
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plug 'Valloric/YouCompleteMe'
+	let g:ycm_server_python_interpreter='python3.9'
+	let g:ycm_autoclose_preview_window_after_completion = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

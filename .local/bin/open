@@ -1,24 +1,5 @@
-#!/bin/sh
-
-# Feed script a url or file location.
-# If an image, it will view in sxiv,
-# if a video or gif, it will view in mpv
-# if a music file or pdf, it will download,
-
-
-## For *.pdf
-
-viewer_pdf() {
-	local dm
-	dm(){ dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -p "choice" ;}
-	case "$(printf "$READER\\npdfx" | dm)"  in
-    "pdfx") pdfx "$1" >/dev/null 2>&1 & ;;
-    "$READER") "$READER" "$1" >/dev/null 2>&1 & disown; exit  ;;
-
-esac
-}
-
-
+#!/usr/bin/env sh
+# Meaningful aliases for arguments:
 ## For *.html
 view() {
 	local dm
@@ -30,67 +11,74 @@ case "$(printf "$EDITOR\\n$BROWSER" | dm )"  in
 esac
 }
 
+## For *.pdf
 
+viewer_pdf() {
+	local dm
+	dm(){ dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -l 5 -p "choice" ;}
+	case "$(printf "$READER\\nfoxit reader" | dm)"  in
+    "foxit reader") foxitreader "$1" >/dev/null 2>&1 & ;;
+    "$READER")
+			notify-send -i "$HOME/.local/share/icons/pdf_zathura.png" "zathura"
+			"$READER" "$1" >/dev/null 2>&1 & disown; exit  ;;
+esac
+}
+
+
+## For *.html
+vHTML() {
+	local dm
+	dm(){ dmenu -fn glisp -nb "#100" -nf "#b9c0af" -sb "#000" -sf "#afff2f" -i -l 22 -p "choice" ;}
+case "$(printf " $EDITOR\\n$BROWSER" | dm )"  in
+    "$EDITOR") "$TERMINAL" -e "$VISUAL" "$1" >/dev/null 2>&1 & ;;
+    "$BROWSER") setsid "$BROWSER" "$1" >/dev/null 2>&1 & disown; exit  ;;
+
+esac
+}
+
+# Find out something about the file:
 
 case "$1" in
-	*png|*jpg|*jpe|*jpeg|*gif)
-		sxiv -a "$1" >/dev/null 2>&1 & ;;
-        *.djvu)
-		evince "$1" & sleep 0.15; exit ;;
-	*epub) if [[ -f "/usr/bin/FBReader" ]]; then
-		FBReader "$1" >/dev/null 2>&1 &
-	else
-		notify-send "📦 FBReader" "must be installed for this function."
-		pacman -Qq FBReader
-	fi ;;
-	*pdf)
-		notify-send -i "$HOME/.local/share/icons/pdf_zathura.png" "zathura"
-		#$READER "$1" >/dev/null 2>&1 & ;;
-		#pdfx "$1" >/dev/null 2>&1 & ;;
-		viewer_pdf "$1" >/dev/null 2>&1 ;;
-	*.html)
-		view "$1" >/dev/null 2>&1 & ;;
-
-	*mp3|*flac|*opus|*mp3?source*)
-#		setsid ffplay "$1" >/dev/null 2>&1 & ;;
-		mpv --really-quiet "$@" & disown; exit ;;
-	*.m3u)
-		mpv "$1" ;;
-   	*mp4|*mkv|*avi|*mpg|*webm|*m4v|*ogv)
-		setsid mpv --really-quiet "$@" & disown; exit ;;
-	*.md)
-		"$TERMINAL" -e "$EDITOR" "$1" >/dev/null 2>&1 & ;;
+	# -- Office; text
+	*.md) $TERMINAL -e $EDITOR "$1";;
+	*.csv) "$TERMINAL" -e sc-im "$1" >/dev/null 2>&1 & ;;
 	*doc|*docx)
 		notify-send  -i "/home/alex/.local/share/icons/WPS_office.png" "Edit of text"
 		setsid $TEXT "$@" & disown; exit  ;;
 	*xls|*xlsx)
 		notify-send  -i "/home/alex/.local/share/icons/libreoffice.png" "Edit of text"
 		setsid libreoffice "$@" & disown; exit  ;;
-	*.torrent)
-		setsid -f transadd "$@" & disown; exit  ;;
-	*.wtfav)
-		wine start /ProgIDOpen Wtlib.Favorite "$@" & disown; exit  ;;
-	*.exe)
-	    if [[ "$1" == *.exe ]]; then
-        	wine "$@" 2>&1 & disown ;exit
-	    fi;;
-	*.csv) "$TERMINAL" -e sc-im "$1" >/dev/null 2>&1 & ;;
-	*.sh)
-			    if [[ "$1" == *.sh ]]; then
-				/usr/bin/sh "$1" >/dev/null 2>&1 &
-					fi;;
-	*)
-		if [[ -f "$1" ]]; then
-			"$TERMINAL" -e "$EDITOR" "$1" >/dev/null 2>&1 &
-		fi ;;
+  *.sh|*.yml) "$TERMINAL" -e "$EDITOR" "$1" >/dev/null 2>&1 & ;;
+
+	# -- Video; Audio
+	*mp3|*flac|*opus|*mp3?source*|*mp4|*mkv|*avi|*mpg|*webm|*m4v|*ogv|*.m3u)
+#		setsid ffplay "$1" >/dev/null 2>&1 & ;;
+		mpv --really-quiet "$@" & disown; exit ;;
+	*.exe) wine "$@" 2>&1 & disown ;exit;;
+	*.wtfav) wine start /ProgIDOpen Wtlib.Favorite "$@" & disown; exit  ;;
+
+	*.torrent)setsid -f transadd "$@" & disown; exit  ;;
+	*.html)
+		view "$1" >/dev/null 2>&1 & ;;
+
+	# -- Image
+	*.epub)evince "$1" & sleep 0.15; exit ;;
+  *.xmind) xmind-2020 "$@" >/dev/null 2>&1 & ;;
+	*.pdf)
+		#setsid zathura "$1" >/dev/null 2>&1 &;;
+		viewer_pdf "$1" >/dev/null 2>&1 ;;
+	*) $TERMINAL -e $VISUAL "$@" >/dev/null 2>&1 & ;;
 esac
 
-#if [[ -d "$1" ]]; then cd "$1" fi
-scv (){
-    if [ $# -ne 1 ]; then
-    echo "Usage: csv <filename>"
-    return
-  fi
+case "$(file --mime-type $1 -Lb)" in
+	# -- Office; text
+		text/troff) man ./ "$1";;
+		application/csv) $TERMINAL -e sc-im "$1";;
+	# -- Image
+		image/x-xcf|image/svg+xml) setsid gimp "$1" >/dev/null 2>&1 &;;
+		image/svg+xml) display -- "$1";;
+		image/*) sxiv "$1" 2>/dev/null;;
 
-    less $1 | sed -e 's/,,/, ,/g' | column -s, -t | less -#5 -N -S
-}
+esac
+
+####################################################

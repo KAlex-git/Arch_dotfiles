@@ -17,24 +17,27 @@ dr="http://somafm.com/dronezone130.pls" # Soma FM Drone Zone iTunes AAC 128K
 lu="http://somafm.com/lush130.pls" # Soma FM Lush iTunes AAC 128K
 so="http://somafm.com/sonicuniverse.pls" # Soma FM Sonic Universe iTunes AAC 128K
 
+# Variable
 dm="dmenu -fn Monospace-8 -sb "#d79921" -sf "#1d2021" -nf "#000000" -nb "#000000" -p"
+dead="kill -TERM $(ps aux | grep "RadioRelax\|classical\|news\|the_current\|local.pls\|radio_heartland\|wonderground\|choral\|shoutcast\|listen.pls\|groovesalad130\|dronezone130\|lush130\|sonicuniverse" )"
 
-case "$(printf "kill\\nRadioRelax\\nclassic\\nnews\\ncurrent\\nlocalcurrent\\nheartland\\nwonderground\\nchoral\\nwefunk\\nsleepbot\\ngroovesalad\\ndronezone\\nlush\\nsonicuniverse" | \
-	dmenu -i -l 20 -fn Monospace-8 -sb "#d79921" -sf "#1d2021" -nf "#000000" -nb "#00ff00" -p "choice radio:")" in
+case "$(printf "RadioRelax\\nkrainaFM\\nclassic\\nnews\\ncurrent\\nlocalcurrent\\nheartland\\nwonderground\\nchoral\\nwefunk\\nsleepbot\\ngroovesalad\\ndronezone\\nlush\\nsonicuniverse\\nkill" | \
+	dmenu -i -l 20 -fn "Itim Cyrillic-14" -sb "#d79921" -sf "#1d2021" -nf "#000000" -nb "#1446367e0" -p "choice radio:")" in
 
-	kill) 		    pkill -9 mpv ;;
-	RadioRelax) 	setsid mpv $re ;;
-	classic ) 	    setsid mpv $cl ;;
-	news ) 	  	    setsid mpv $ne ;; # MPR News
-	current ) 	    setsid mpv $cu ;; # The Current
-	localcurrent ) 	setsid mpv $lo ;; # Local Current
-	heartland ) 	setsid mpv $he ;; # MPR Radio Heartland
-	wonderground ) 	setsid mpv $wo ;; # MPR Wonderground Windows Media
-	choral )	    setsid mpv $ch ;; # Clasical MPR Choral
-	wefunk	)	    setsid mpv $we ;; # WEFUNK Radio MP3 64K
-	sleepbot )	    setsid mpv $sl ;; # Sleepbot Environmental Broadcast 56K MP3
-	groovesalad )	setsid mpv $gr ;; # Soma FM Groove Salad iTunes AAC 128K
-	dronezone ) 	setsid mpv $dr ;; # Soma FM Drone Zone iTunes AAC 128K
-	lush )		    setsid mpv $lu ;; # FM Lush iTunes AAC 128K
-	sonicuniverse )	setsid mpv $so ;; # Soma FM Sonic Universe iTunes AAC 128K
+	kill)						$dead >/dev/null 2>&1;;
+	krainaFM)				$dead ;	setsid mpv http://krainafm.com.ua/ >/dev/null 2>&1 ;;
+	RadioRelax)			$dead ;	setsid mpv $re >/dev/null 2>&1	;;
+	classic ) 	    $dead ;	setsid mpv $cl >/dev/null 2>&1	;;
+	news ) 	  	    $dead ;	setsid mpv $ne >/dev/null 2>&1	;; # MPR News
+	current ) 	    $dead ;	setsid mpv $cu >/dev/null 2>&1	;; # The Current
+	localcurrent ) 	$dead ;	setsid mpv $lo >/dev/null 2>&1	;; # Local Current
+	heartland )			$dead ;	setsid mpv $he >/dev/null 2>&1	;; # MPR Radio Heartland
+	wonderground ) 	$dead ;	setsid mpv $wo >/dev/null 2>&1	;; # MPR Wonderground Windows Media
+	choral )				$dead ;	setsid mpv $ch >/dev/null 2>&1	;; # Clasical MPR Choral
+	wefunk	)				$dead ;	setsid mpv $we >/dev/null 2>&1	;; # WEFUNK Radio MP3 64K
+	sleepbot )	    $dead ;	setsid mpv $sl >/dev/null 2>&1	;; # Sleepbot Environmental Broadcast 56K MP3
+	groovesalad )		$dead ;	setsid mpv $gr >/dev/null 2>&1	;; # Soma FM Groove Salad iTunes AAC 128K
+	dronezone )			$dead ;	setsid mpv $dr >/dev/null 2>&1	;; # Soma FM Drone Zone iTunes AAC 128K
+	lush )					$dead ;	setsid mpv $lu >/dev/null 2>&1	;; # FM Lush iTunes AAC 128K
+	sonicuniverse )	$dead ;	setsid mpv $so >/dev/null 2>&1	;; # Soma FM Sonic Universe iTunes AAC 128K
 esac

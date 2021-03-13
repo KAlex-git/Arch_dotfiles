@@ -7,7 +7,7 @@
 ##
 ###########################################################################
 
-WM="$(ps -A | egrep -i "bspwm|dwm" | head -1 | awk '{print $4}')"
+WM="$(ps -A | egrep -i "bspwm|dwm|xmonad" | head -1 | awk '{print $4}')"
 
 2scr="$(xrandr --output LVDS-1 --primary --mode 1366x768 --pos 0x851 --rotate normal --output VGA-1 --mode 1024x768 --pos 0x0 --rotate normal --output HDMI-1 --off)"
 
@@ -15,12 +15,29 @@ WM="$(ps -A | egrep -i "bspwm|dwm" | head -1 | awk '{print $4}')"
 
 if [[ "$WM" == "dwm" ]]; then
 	$2scr
-	notify-send 'dwm'
+	notify-send 'enable VGA-1'
 else
-	$2scr
-	#notify-send 'bspwm'
+	"$2scrOFF"
+	notify-send 'enable VGA-1'
 
-	#pgrep -u $UID -x polybar && killall -q polybar
-	#$HOME/.config/polybar/launchpolybar.sh | $SHELL & disown ;exit
+	# Uncomment VGA
+	enableLVDS=$(cat ~/.config/xmobar/xmobarrc0 | sed -n '18p'| grep -Eo "\--" )
+	if [[ "$enableLVDS" == "--" ]]; then
+		exit 1
+	else
+		sed -i '16 s/--//' .config/xmobar/xmobarrc0
+		sed -i '18 s/^/--/' .config/xmobar/xmobarrc0
+	fi
 
 fi
+# Uncomment LVDS
+sleep 3
+xmonad --restart
+
+
+##if [[ "$(cat ~/.config/xmobar/xmobarrc0 | sed -n '18p'| grep '\----' )" == "--" ]];then
+##else
+##fi
+	#notify-send 'bspwm'
+	#pgrep -u $UID -x polybar && killall -q polybar
+	#$HOME/.config/polybar/launchpolybar.sh | $SHELL & disown ;exit
