@@ -26,7 +26,7 @@ while true; do
 					rsync -avzur --delete "$HOME/.config/lf" "$HOME/dev/Arch_dotfiles/.config"
 					rsync -avzur --delete "$HOME/.config/sxhkd" "$HOME/dev/Arch_dotfiles/.config"
 					rsync -avzur --delete "$HOME/.xmonad"	"$HOME/dev/Arch_dotfiles/"
-					rsync -avzur --delete "$HOME/..emacs.d"	"$HOME/dev/Arch_dotfiles/"
+					rsync -avzur --delete "$HOME/.emacs.d"	"$HOME/dev/Arch_dotfiles/"
 
 					rsync -avzur --delete "$HOME/.config/nvim/UltiSnips" "$HOME/dev/Arch_dotfiles/.config/nvim"
 					rsync -avzur --delete "$HOME/.config/nvim/colors" "$HOME/dev/Arch_dotfiles/.config/nvim"
@@ -48,8 +48,8 @@ while true; do
 					(cd $HOME/.local/src/ ; tar zcvf dmenu.tgz dmenu)
 					(cd $HOME/.local/src/ ; tar zcvf dwmblocks.tgz dwmblocks)
 					(cd $HOME/.local/src/ ; tar zcvf sxiv.tgz sxiv)
-					(cd $HOME/.xmonad ; tar zcvf xmonad.tgz xmonad)
-					(cd $HOME/.emacs ; tar zcvf emacs.tgz emacs)
+					(cd $HOME ; tar zcvf xmonad.tgz xmonad)
+					(cd $HOME ; tar zcvf emacs.tgz emacs)
 					rsync -avzur --delete "$HOME/.local/src/st.tgz" $HOME/dev/Arch_dotfiles/.local/src
 					rsync -avzur --delete "$HOME/.local/src/dwm.tgz" $HOME/dev/Arch_dotfiles/.local/src
 					rsync -avzur --delete "$HOME/.local/src/dmenu.tgz" $HOME/dev/Arch_dotfiles/.local/src
